@@ -1,1 +1,1057 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
+<title>Number Base Conversion MCQ Practice</title>
+
+<style>
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f3f4f6;
+  margin:0;
+  color:#1f2937;
+}
+
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  padding:24px;
+  border-radius:14px;
+  box-shadow:0 2px 10px #0001;
+  margin-bottom:16px;
+}
+
+.topic,
+.option{
+  display:block;
+  width:100%;
+  text-align:left;
+  padding:14px;
+  margin:10px 0;
+  background:#fff;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.selected{
+  border:2px solid #2563eb;
+  background:#eff6ff;
+}
+
+button,
+select{
+  padding:11px 16px;
+  border:0;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:16px;
+  margin:4px;
+}
+
+.primary{
+  background:#2563eb;
+  color:white;
+}
+
+.secondary{
+  background:#e5e7eb;
+}
+
+.hidden{
+  display:none;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.correct{
+  background:#dcfce7;
+  border-color:#16a34a;
+}
+
+.wrong{
+  background:#fee2e2;
+  border-color:#dc2626;
+}
+
+.explain{
+  margin-top:14px;
+  padding:14px;
+  background:#f8fafc;
+  border-radius:8px;
+  line-height:1.6;
+}
+
+#palette button{
+  min-width:42px;
+}
+
+.done{
+  background:#bbf7d0;
+}
+
+.current{
+  outline:2px solid #2563eb;
+}
+
+.small{
+  color:#6b7280;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<!-- HOME -->
+
+<div id="home" class="card">
+
+<h1>🔢 Number Base Conversion</h1>
+
+<p class="small">
+40 MCQs | Topic-wise Practice
+</p>
+
+<div id="topics"></div>
+
+</div>
+
+
+<!-- SETUP -->
+
+<div id="setup" class="card hidden">
+
+<button class="secondary" onclick="goHome()">
+← Back
+</button>
+
+<h2 id="topicTitle"></h2>
+
+<p id="topicInfo"></p>
+
+<label>
+
+Practice Questions:
+
+<select id="count"></select>
+
+</label>
+
+<br><br>
+
+<button class="primary" onclick="start()">
+
+Start Practice
+
+</button>
+
+</div>
+
+
+<!-- QUIZ -->
+
+<div id="quiz" class="hidden">
+
+<div class="card top">
+
+<b id="progress"></b>
+
+<b id="topicBadge"></b>
+
+</div>
+
+
+<div class="card">
+
+<h2 id="question"></h2>
+
+<div id="options"></div>
+
+<div id="explanation" class="hidden explain"></div>
+
+</div>
+
+
+<div class="card top">
+
+<div>
+
+<button class="secondary" onclick="prev()">
+
+Previous
+
+</button>
+
+<button class="primary" onclick="next()">
+
+Next
+
+</button>
+
+</div>
+
+
+<button class="primary" onclick="finish()">
+
+Submit Test
+
+</button>
+
+</div>
+
+
+<div id="palette" class="card"></div>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div id="result" class="card hidden">
+
+<h1>🎯 Result</h1>
+
+<h2 id="score"></h2>
+
+<p id="stats"></p>
+
+<button class="primary" onclick="review()">
+
+Review Answers & Explanations
+
+</button>
+
+<button class="secondary" onclick="goHome()">
+
+Choose Topic
+
+</button>
+
+<button class="secondary" onclick="restart()">
+
+Try Again
+
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+const topics = [
+
+{
+"name":"Binary to Other Number System",
+
+"questions":[
+
+{
+"id":1,
+"question":"What is the decimal equivalent of the binary number 1010?",
+"options":["10","12","8","5"],
+"answer":"a",
+"explanation":"1010₂ = 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 8 + 2 = 10."
+},
+
+{
+"id":2,
+"question":"Convert binary 1101 to octal.",
+"options":["15","17","25","35"],
+"answer":"a",
+"explanation":"Group from right: 001 101 → 1 5, so octal = 15₈."
+},
+
+{
+"id":3,
+"question":"What is the hexadecimal of binary 1111?",
+"options":["A","F","E","C"],
+"answer":"b",
+"explanation":"1111₂ corresponds to F in hexadecimal."
+},
+
+{
+"id":4,
+"question":"What is the decimal value of binary 10001?",
+"options":["15","16","17","18"],
+"answer":"c",
+"explanation":"10001₂ = 16 + 1 = 17."
+},
+
+{
+"id":5,
+"question":"Which of the following is the binary representation of decimal 9?",
+"options":["1000","1001","1010","1011"],
+"answer":"b",
+"explanation":"9₁₀ = 8 + 1, so binary = 1001₂."
+},
+
+{
+"id":6,
+"question":"Binary number 111000 is equal to which octal number?",
+"options":["60","70","50","65"],
+"answer":"b",
+"explanation":"Group: 111 000 → 7 0, so octal = 70₈."
+},
+
+{
+"id":7,
+"question":"What is the hexadecimal value of binary 101011?",
+"options":["2B","1F","3C","2A"],
+"answer":"a",
+"explanation":"Group into 4 bits: 0010 1011 → 2B."
+},
+
+{
+"id":8,
+"question":"Convert binary 100100 to decimal.",
+"options":["34","36","38","32"],
+"answer":"b",
+"explanation":"100100₂ = 32 + 4 = 36."
+},
+
+{
+"id":9,
+"question":"Which binary number is equal to hexadecimal B?",
+"options":["1011","1100","1110","1001"],
+"answer":"a",
+"explanation":"Hex B = decimal 11 = binary 1011₂."
+},
+
+{
+"id":10,
+"question":"What is the octal value of binary 100101?",
+"options":["45","41","51","44"],
+"answer":"a",
+"explanation":"Group: 100 101 → 4 5, so octal = 45₈."
+}
+
+]
+},
+
+
+{
+"name":"Decimal to Other Number System",
+
+"questions":[
+
+{
+"id":11,
+"question":"What is the binary of decimal 20?",
+"options":["10010","10100","10011","11100"],
+"answer":"b",
+"explanation":"20₁₀ = 16 + 4, so binary = 10100₂."
+},
+
+{
+"id":12,
+"question":"Convert decimal 64 to octal.",
+"options":["80","100","72","74"],
+"answer":"b",
+"explanation":"64₁₀ = 100₈."
+},
+
+{
+"id":13,
+"question":"What is the hexadecimal of decimal 255?",
+"options":["FF","EE","AF","FA"],
+"answer":"a",
+"explanation":"255 = 15×16 + 15, so hexadecimal = FF."
+},
+
+{
+"id":14,
+"question":"Decimal 10 is equal to which binary number?",
+"options":["1001","1010","1110","1100"],
+"answer":"b",
+"explanation":"10₁₀ = 1010₂."
+},
+
+{
+"id":15,
+"question":"What is the octal equivalent of decimal 8?",
+"options":["10","11","8","9"],
+"answer":"a",
+"explanation":"8₁₀ = 10₈."
+},
+
+{
+"id":16,
+"question":"Decimal 100 is what in hexadecimal?",
+"options":["64","62","66","68"],
+"answer":"a",
+"explanation":"100 ÷ 16 = 6 remainder 4, so hexadecimal = 64₁₆."
+},
+
+{
+"id":17,
+"question":"Convert decimal 32 to binary.",
+"options":["10000","10100","100000","11111"],
+"answer":"c",
+"explanation":"32₁₀ = 2⁵, so binary = 100000₂."
+},
+
+{
+"id":18,
+"question":"What is decimal 16 in hexadecimal?",
+"options":["12","20","10","1F"],
+"answer":"c",
+"explanation":"16₁₀ = 10₁₆."
+},
+
+{
+"id":19,
+"question":"Decimal 50 in octal is?",
+"options":["60","62","61","55"],
+"answer":"b",
+"explanation":"50 ÷ 8 = 6 remainder 2, so octal = 62₈."
+},
+
+{
+"id":20,
+"question":"Which hexadecimal number is equal to decimal 31?",
+"options":["1F","1E","2F","2A"],
+"answer":"a",
+"explanation":"31 = 1×16 + 15, so hexadecimal = 1F."
+}
+
+]
+},
+
+
+{
+"name":"Octal & Hexadecimal to Other Number Systems",
+
+"questions":[
+
+{
+"id":21,
+"question":"Convert octal 25 to binary.",
+"options":["10101","10011","11001","11100"],
+"answer":"a",
+"explanation":"2₈ = 010₂ and 5₈ = 101₂ → 10101₂."
+},
+
+{
+"id":22,
+"question":"Octal 10 is equal to which decimal number?",
+"options":["9","10","8","12"],
+"answer":"c",
+"explanation":"10₈ = 8₁₀."
+},
+
+{
+"id":23,
+"question":"What is the hexadecimal of octal 17?",
+"options":["F","E","D","1F"],
+"answer":"a",
+"explanation":"17₈ = 15₁₀ = F₁₆."
+},
+
+{
+"id":24,
+"question":"Convert octal 100 to decimal.",
+"options":["60","64","70","80"],
+"answer":"b",
+"explanation":"100₈ = 64₁₀."
+},
+
+{
+"id":25,
+"question":"What is the binary equivalent of octal 7?",
+"options":["100","111","110","101"],
+"answer":"b",
+"explanation":"7₈ = 111₂."
+},
+
+{
+"id":26,
+"question":"Which octal number is equal to binary 110011?",
+"options":["63","66","61","73"],
+"answer":"a",
+"explanation":"Group: 110 011 → 63₈."
+},
+
+{
+"id":27,
+"question":"What is the hexadecimal equivalent of octal 77?",
+"options":["3F","4F","5F","2F"],
+"answer":"a",
+"explanation":"77₈ = 63₁₀ = 3F₁₆."
+},
+
+{
+"id":28,
+"question":"Convert octal 45 to decimal.",
+"options":["37","39","38","41"],
+"answer":"a",
+"explanation":"45₈ = 4×8 + 5 = 37₁₀."
+},
+
+{
+"id":29,
+"question":"What is the binary of hexadecimal A?",
+"options":["1010","1000","1100","1110"],
+"answer":"a",
+"explanation":"Hex A = decimal 10 = binary 1010₂."
+},
+
+{
+"id":30,
+"question":"Convert hexadecimal 1F to decimal.",
+"options":["30","31","28","26"],
+"answer":"b",
+"explanation":"1F₁₆ = 1×16 + 15 = 31₁₀."
+}
+
+]
+},
+
+
+{
+"name":"Hexadecimal to Other Number System",
+
+"questions":[
+
+{
+"id":31,
+"question":"What is the binary equivalent of hexadecimal A?",
+"options":["1000","1010","1110","1100"],
+"answer":"b",
+"explanation":"A₁₆ = 1010₂."
+},
+
+{
+"id":32,
+"question":"Hexadecimal 1F is equal to which decimal number?",
+"options":["31","30","28","26"],
+"answer":"a",
+"explanation":"1F₁₆ = 31₁₀."
+},
+
+{
+"id":33,
+"question":"What is the octal equivalent of hexadecimal 1A?",
+"options":["32","33","34","36"],
+"answer":"a",
+"explanation":"1A₁₆ = 26₁₀ = 32₈."
+},
+
+{
+"id":34,
+"question":"Convert hexadecimal 2F to binary.",
+"options":["101011","110111","101111","111111"],
+"answer":"c",
+"explanation":"2 = 0010 and F = 1111, so 2F₁₆ = 101111₂."
+},
+
+{
+"id":35,
+"question":"What is the decimal value of hexadecimal FF?",
+"options":["250","255","256","254"],
+"answer":"b",
+"explanation":"FF₁₆ = 15×16 + 15 = 255₁₀."
+},
+
+{
+"id":36,
+"question":"Which hexadecimal number is equal to binary 111100?",
+"options":["3F","2E","3C","2F"],
+"answer":"c",
+"explanation":"111100₂ = 0011 1100₂ = 3C₁₆."
+},
+
+{
+"id":37,
+"question":"Hexadecimal 3C is equal to which octal number?",
+"options":["74","75","76","77"],
+"answer":"a",
+"explanation":"3C₁₆ = 60₁₀ = 74₈."
+},
+
+{
+"id":38,
+"question":"Convert hexadecimal 64 to decimal.",
+"options":["100","96","98","104"],
+"answer":"a",
+"explanation":"64₁₆ = 6×16 + 4 = 100₁₀."
+},
+
+{
+"id":39,
+"question":"What is the binary of hexadecimal B?",
+"options":["1011","1110","1100","1001"],
+"answer":"a",
+"explanation":"B₁₆ = 11₁₀ = 1011₂."
+},
+
+{
+"id":40,
+"question":"Hexadecimal 7F equals what in decimal?",
+"options":["125","127","129","124"],
+"answer":"b",
+"explanation":"7F₁₆ = 7×16 + 15 = 127₁₀."
+}
+
+]
+
+}
+
+];
+
+
+let selected = null;
+
+let qs = [];
+
+let idx = 0;
+
+let ans = {};
+
+let reviewMode = false;
+
+
+
+function show(id){
+
+["home","setup","quiz","result"].forEach(x => {
+
+document.getElementById(x).classList.add("hidden");
+
+});
+
+document.getElementById(id).classList.remove("hidden");
+
+}
+
+
+
+function renderTopics(){
+
+let box = document.getElementById("topics");
+
+topics.forEach((t,i)=>{
+
+let b = document.createElement("button");
+
+b.className = "topic";
+
+b.innerHTML =
+
+"<b>"+t.name+"</b><br>" +
+
+"<span class='small'>"+t.questions.length+" Questions</span>";
+
+b.onclick = () => choose(i);
+
+box.appendChild(b);
+
+});
+
+}
+
+
+
+function choose(i){
+
+selected = topics[i];
+
+document.getElementById("topicTitle").textContent = selected.name;
+
+document.getElementById("topicInfo").textContent =
+selected.questions.length + " questions available";
+
+
+let s = document.getElementById("count");
+
+s.innerHTML = "";
+
+
+[5,10].filter(n=>n<=selected.questions.length)
+
+.forEach(n=>{
+
+let o = document.createElement("option");
+
+o.value = n;
+
+o.textContent = n;
+
+s.appendChild(o);
+
+});
+
+
+let all = document.createElement("option");
+
+all.value = selected.questions.length;
+
+all.textContent = "All (" + selected.questions.length + ")";
+
+s.appendChild(all);
+
+s.value = selected.questions.length;
+
+
+show("setup");
+
+}
+
+
+
+function shuffle(a){
+
+return [...a].sort(()=>Math.random()-0.5);
+
+}
+
+
+
+function start(){
+
+qs = shuffle(selected.questions)
+
+.slice(0,+document.getElementById("count").value);
+
+idx = 0;
+
+ans = {};
+
+reviewMode = false;
+
+show("quiz");
+
+render();
+
+}
+
+
+
+function render(){
+
+let q = qs[idx];
+
+
+document.getElementById("progress").textContent =
+
+"Question " + (idx+1) + " of " + qs.length;
+
+
+document.getElementById("topicBadge").textContent =
+
+selected.name;
+
+
+document.getElementById("question").textContent =
+
+q.question;
+
+
+let box = document.getElementById("options");
+
+box.innerHTML = "";
+
+
+q.options.forEach((o,i)=>{
+
+let letters = "abcd";
+
+let l = letters[i];
+
+let b = document.createElement("button");
+
+
+b.className =
+
+"option" +
+
+(ans[q.id]===l ? " selected" : "");
+
+
+b.textContent =
+
+l.toUpperCase()+") "+o;
+
+
+if(reviewMode){
+
+b.disabled = true;
+
+
+if(l === q.answer){
+
+b.classList.add("correct");
+
+}
+
+
+if(ans[q.id] === l && l !== q.answer){
+
+b.classList.add("wrong");
+
+}
+
+}
+
+else{
+
+b.onclick = ()=>{
+
+ans[q.id] = l;
+
+render();
+
+};
+
+}
+
+
+box.appendChild(b);
+
+});
+
+
+let ex = document.getElementById("explanation");
+
+
+if(reviewMode){
+
+ex.classList.remove("hidden");
+
+
+ex.innerHTML =
+
+"<b>Correct Answer: "
+
++
+
+q.answer.toUpperCase()
+
++
+
+") "
+
++
+
+q.options["abcd".indexOf(q.answer)]
+
++
+
+"</b><br><br>"
+
++
+
+"<b>Explanation:</b> "
+
++
+
+q.explanation;
+
+}
+
+else{
+
+ex.classList.add("hidden");
+
+}
+
+
+
+let p = document.getElementById("palette");
+
+
+p.innerHTML = "<b>Question Palette</b><br>";
+
+
+qs.forEach((x,i)=>{
+
+let b = document.createElement("button");
+
+b.textContent = i+1;
+
+
+if(ans[x.id]){
+
+b.classList.add("done");
+
+}
+
+
+if(i === idx){
+
+b.classList.add("current");
+
+}
+
+
+b.onclick = ()=>{
+
+idx = i;
+
+render();
+
+};
+
+
+p.appendChild(b);
+
+});
+
+}
+
+
+
+function prev(){
+
+if(idx > 0){
+
+idx--;
+
+render();
+
+}
+
+}
+
+
+
+function next(){
+
+if(idx < qs.length-1){
+
+idx++;
+
+render();
+
+}
+
+}
+
+
+
+function finish(){
+
+if(!confirm("Submit your test?"))
+
+return;
+
+
+let correct =
+
+qs.filter(q=>ans[q.id] === q.answer)
+
+.length;
+
+
+let attempted =
+
+Object.keys(ans).length;
+
+
+document.getElementById("score").textContent =
+
+"Score: " +
+
+correct +
+
+" / " +
+
+qs.length;
+
+
+document.getElementById("stats").textContent =
+
+"Attempted: "
+
++
+
+attempted
+
++
+
+" | Correct: "
+
++
+
+correct
+
++
+
+" | Wrong: "
+
++
+
+(attempted-correct)
+
++
+
+" | Unattempted: "
+
++
+
+(qs.length-attempted);
+
+
+show("result");
+
+}
+
+
+
+function review(){
+
+reviewMode = true;
+
+idx = 0;
+
+show("quiz");
+
+render();
+
+}
+
+
+
+function restart(){
+
+start();
+
+}
+
+
+
+function goHome(){
+
+show("home");
+
+}
+
+
+renderTopics();
+
+
+</script>
+
+</body>
+
+</html>
