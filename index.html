@@ -1,91 +1,708 @@
-<!-- More Subjects Section -->
-<section class="section">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Science MCQ | Abhishek Kumar</title>
 
-    <!-- DBMS -->
-    <div class="subject-card">
-        <div class="subject-head">
-            <div class="subject-icon">🗄️</div>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #071a3a;
+    --blue: #2563eb;
+    --blue2: #3b82f6;
+    --text: #14213d;
+    --muted: #64748b;
+    --bg: #f5f8ff;
+    --border: #dbe7ff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top left, #eaf2ff 0, transparent 32%),
+        radial-gradient(circle at top right, #eef4ff 0, transparent 28%),
+        var(--bg);
+    color: var(--text);
+}
+
+.container {
+    width: min(1180px, calc(100% - 32px));
+    margin: auto;
+}
+
+/* Header / Navigation */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 26, 58, 0.96);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(7, 26, 58, 0.18);
+}
+
+.nav-inner {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.brand-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    font-size: 22px;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+.brand-title {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.brand-title span {
+    color: #60a5fa;
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    color: #dbeafe;
+    font-size: 14px;
+}
+
+.nav-links a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* Profile */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 12px;
+    background: rgba(255,255,255,.06);
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #eff6ff;
+    color: var(--blue);
+    font-weight: 800;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.profile-sub {
+    font-size: 11px;
+    color: #bfdbfe;
+    margin-top: 2px;
+}
+
+/* Hero Section */
+.hero {
+    margin: 28px 0 26px;
+    border-radius: 28px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(96,165,250,.28), transparent 24%),
+        radial-gradient(circle at 78% 78%, rgba(124,58,237,.22), transparent 28%),
+        linear-gradient(135deg, #071a3a, #0f2d66 60%, #163f83);
+    color: #fff;
+    position: relative;
+    box-shadow: 0 18px 45px rgba(7,26,58,.20);
+}
+
+.hero-content {
+    padding: 52px 48px;
+    max-width: 760px;
+}
+
+.hero-kicker {
+    color: #93c5fd;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    margin-bottom: 10px;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.05;
+}
+
+.hero h1 span {
+    color: #60a5fa;
+}
+
+.hero p {
+    margin: 16px 0 0;
+    color: #dbeafe;
+    font-size: 17px;
+    line-height: 1.65;
+}
+
+.hero-name {
+    margin-top: 14px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #bfdbfe;
+}
+
+/* Hero Buttons */
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.hero-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 12px 17px;
+    border-radius: 11px;
+    font-weight: 800;
+    border: 1px solid rgba(255,255,255,.2);
+}
+
+.hero-btn.primary {
+    background: #fff;
+    color: var(--navy);
+}
+
+.hero-btn.secondary {
+    background: rgba(255,255,255,.08);
+    color: #fff;
+}
+
+/* Section */
+.section {
+    margin: 26px 0;
+}
+
+.section-title {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.section-title h2 {
+    margin: 0;
+    font-size: 27px;
+}
+
+.section-title p {
+    margin: 4px 0 0;
+    color: var(--muted);
+}
+
+/* Subject Card */
+.subject-card {
+    background: rgba(255,255,255,.95);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 12px 35px rgba(29,78,216,.08);
+}
+
+.subject-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.subject-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #4338ca, #2563eb);
+    color: #fff;
+    font-size: 28px;
+    box-shadow: 0 10px 22px rgba(37,99,235,.25);
+}
+
+.subject-head h3 {
+    margin: 0;
+    font-size: 23px;
+}
+
+.subject-head p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.badge {
+    margin-left: auto;
+    background: #eaf2ff;
+    color: var(--blue);
+    border: 1px solid #cfe0ff;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* Quiz Grid */
+.quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 11px;
+}
+
+.quiz-grid a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(135deg, var(--blue), var(--blue2));
+    padding: 13px 8px;
+    border-radius: 11px;
+    font-size: 14px;
+    font-weight: 800;
+    box-shadow: 0 7px 16px rgba(37,99,235,.18);
+    transition: .18s ease;
+}
+
+.quiz-grid a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 11px 20px rgba(37,99,235,.24);
+}
+
+/* More Subjects */
+.more-subjects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.coming-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 28px rgba(15,23,42,.06);
+}
+
+.coming-card h3 {
+    margin: 0 0 8px;
+    font-size: 21px;
+}
+
+.coming-card p {
+    color: var(--muted);
+    margin: 0 0 16px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.lock {
+    display: inline-block;
+    padding: 8px 11px;
+    border-radius: 9px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* Motivation */
+.quote {
+    margin: 28px 0;
+    background: linear-gradient(90deg, #eaf2ff, #f4efff);
+    border: 1px solid #d8e3ff;
+    border-radius: 18px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.quote-text {
+    font-size: 19px;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.quote-author {
+    color: var(--blue);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+/* Footer */
+.footer {
+    margin-top: 34px;
+    background: #071a3a;
+    color: #fff;
+}
+
+.footer-inner {
+    padding: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer h3 {
+    margin: 0 0 5px;
+}
+
+.footer p {
+    margin: 0;
+    color: #bfdbfe;
+    font-size: 13px;
+}
+
+.footer-right {
+    text-align: right;
+    color: #bfdbfe;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+
+    .quiz-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .more-subjects {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 620px) {
+    .container {
+        width: min(100% - 20px, 1180px);
+    }
+
+    .hero-content {
+        padding: 36px 24px;
+    }
+
+    .subject-card {
+        padding: 17px;
+    }
+
+    .quiz-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .quiz-grid a {
+        padding: 11px 5px;
+        font-size: 13px;
+    }
+
+    .subject-head {
+        align-items: flex-start;
+    }
+
+    .quote {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-right {
+        text-align: left;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header / Navigation -->
+<nav class="navbar">
+    <div class="container nav-inner">
+
+        <a class="brand" href="#">
+            <div class="brand-icon">⌘</div>
+            <div class="brand-title">
+                Computer Science <span>MCQ</span>
+            </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#subjects">Subjects</a>
+            <a href="#practice">Practice</a>
+        </div>
+
+        <!-- Profile -->
+        <div class="profile">
+            <div class="avatar">A</div>
+
             <div>
+                <div class="profile-name">Abhishek Kumar</div>
+                <div class="profile-sub">Keep Learning</div>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+<main class="container">
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+
+            <div class="hero-kicker">
+                WELCOME TO YOUR PRACTICE PORTAL
+            </div>
+
+            <h1>
+                Computer Science <span>MCQ Portal</span>
+            </h1>
+
+            <div class="hero-name">
+                By Abhishek Kumar
+            </div>
+
+            <p>
+                Practice chapter-wise MCQs, strengthen your concepts,
+                improve accuracy and keep progressing every day.
+            </p>
+
+            <!-- Hero Buttons -->
+            <div class="hero-actions">
+                <a class="hero-btn primary" href="#subjects">
+                    Start Practice
+                </a>
+
+                <a class="hero-btn secondary" href="#practice">
+                    Explore Subjects
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Subjects Section -->
+    <section class="section" id="subjects">
+
+        <div class="section-title">
+            <div>
+                <h2>Subjects</h2>
+                <p>Choose a subject and start your practice.</p>
+            </div>
+        </div>
+
+        <!-- Digital Electronics -->
+        <div class="subject-card" id="practice">
+
+            <div class="subject-head">
+
+                <div class="subject-icon">
+                    ▦
+                </div>
+
+                <div>
+                    <h3>Digital Electronics</h3>
+                    <p>
+                        Number systems, logic gates, Boolean algebra,
+                        codes and more.
+                    </p>
+                </div>
+
+                <div class="badge">
+                    25 Quizzes
+                </div>
+
+            </div>
+
+            <!-- Digital Electronics Quiz Links -->
+            <div class="quiz-grid">
+
+                <a href="Digital-Electronics/de1.html">DE1</a>
+                <a href="Digital-Electronics/de2.html">DE2</a>
+                <a href="Digital-Electronics/de3.html">DE3</a>
+                <a href="Digital-Electronics/de4.html">DE4</a>
+                <a href="Digital-Electronics/de5.html">DE5</a>
+
+                <a href="Digital-Electronics/de6.html">DE6</a>
+                <a href="Digital-Electronics/de7.html">DE7</a>
+                <a href="Digital-Electronics/de8.html">DE8</a>
+                <a href="Digital-Electronics/de9.html">DE9</a>
+                <a href="Digital-Electronics/de10.html">DE10</a>
+
+                <a href="Digital-Electronics/de11.html">DE11</a>
+                <a href="Digital-Electronics/de12.html">DE12</a>
+                <a href="Digital-Electronics/de13.html">DE13</a>
+                <a href="Digital-Electronics/de14.html">DE14</a>
+                <a href="Digital-Electronics/de15.html">DE15</a>
+
+                <a href="Digital-Electronics/de16.html">DE16</a>
+                <a href="Digital-Electronics/de17.html">DE17</a>
+                <a href="Digital-Electronics/de18.html">DE18</a>
+                <a href="Digital-Electronics/de19.html">DE19</a>
+                <a href="Digital-Electronics/de20.html">DE20</a>
+
+                <a href="Digital-Electronics/de21.html">DE21</a>
+                <a href="Digital-Electronics/de22.html">DE22</a>
+                <a href="Digital-Electronics/de23.html">DE23</a>
+                <a href="Digital-Electronics/de24.html">DE24</a>
+                <a href="Digital-Electronics/de25.html">DE25</a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- More Subjects Section -->
+    <section class="section">
+
+        <div class="section-title">
+            <div>
+                <h2>More Subjects</h2>
+                <p>
+                    More Computer Science practice sections.
+                </p>
+            </div>
+        </div>
+
+        <div class="more-subjects">
+
+            <!-- DBMS -->
+            <div class="coming-card">
                 <h3>DBMS</h3>
-                <p>Database concepts, SQL, normalization, transactions and more.</p>
+                <p>
+                    Database concepts, SQL, normalization,
+                    transactions and more.
+                </p>
+                <span class="lock">
+                    COMING SOON
+                </span>
             </div>
-            <div class="badge">5 Quizzes</div>
-        </div>
 
-        <!-- DBMS Quiz Links -->
-        <div class="quiz-grid">
-            <a href="DBMS/dbms1.html">DBMS1</a>
-            <a href="DBMS/dbms2.html">DBMS2</a>
-            <a href="DBMS/dbms3.html">DBMS3</a>
-            <a href="DBMS/dbms4.html">DBMS4</a>
-            <a href="DBMS/dbms5.html">DBMS5</a>
-        </div>
-    </div>
-
-
-    <!-- DSA -->
-    <div class="subject-card">
-        <div class="subject-head">
-            <div class="subject-icon">🌳</div>
-            <div>
+            <!-- DSA -->
+            <div class="coming-card">
                 <h3>DSA</h3>
-                <p>Arrays, linked lists, stacks, queues, trees, graphs and algorithms.</p>
+                <p>
+                    Arrays, linked lists, stacks, queues,
+                    trees, graphs and algorithms.
+                </p>
+                <span class="lock">
+                    COMING SOON
+                </span>
             </div>
-            <div class="badge">5 Quizzes</div>
-        </div>
 
-        <!-- DSA Quiz Links -->
-        <div class="quiz-grid">
-            <a href="DSA/dsa1.html">DSA1</a>
-            <a href="DSA/dsa2.html">DSA2</a>
-            <a href="DSA/dsa3.html">DSA3</a>
-            <a href="DSA/dsa4.html">DSA4</a>
-            <a href="DSA/dsa5.html">DSA5</a>
-        </div>
-    </div>
-
-
-    <!-- Operating System -->
-    <div class="subject-card">
-        <div class="subject-head">
-            <div class="subject-icon">💻</div>
-            <div>
+            <!-- Operating System -->
+            <div class="coming-card">
                 <h3>Operating System</h3>
-                <p>Processes, scheduling, memory management, file systems and more.</p>
+                <p>
+                    Processes, scheduling, memory management,
+                    file systems and more.
+                </p>
+                <span class="lock">
+                    COMING SOON
+                </span>
             </div>
-            <div class="badge">5 Quizzes</div>
-        </div>
 
-        <!-- Operating System Quiz Links -->
-        <div class="quiz-grid">
-            <a href="Operating-System/os1.html">OS1</a>
-            <a href="Operating-System/os2.html">OS2</a>
-            <a href="Operating-System/os3.html">OS3</a>
-            <a href="Operating-System/os4.html">OS4</a>
-            <a href="Operating-System/os5.html">OS5</a>
-        </div>
-    </div>
-
-
-    <!-- Artificial Intelligence -->
-    <div class="subject-card">
-        <div class="subject-head">
-            <div class="subject-icon">🤖</div>
-            <div>
+            <!-- Artificial Intelligence -->
+            <div class="coming-card">
                 <h3>Artificial Intelligence</h3>
-                <p>AI concepts, search techniques, knowledge representation and more.</p>
+                <p>
+                    AI concepts, search techniques,
+                    knowledge representation and more.
+                </p>
+                <span class="lock">
+                    COMING SOON
+                </span>
             </div>
-            <div class="badge">5 Quizzes</div>
+
         </div>
 
-        <!-- Artificial Intelligence Quiz Links -->
-        <div class="quiz-grid">
-            <a href="Artificial-Intelligence/ai1.html">AI1</a>
-            <a href="Artificial-Intelligence/ai2.html">AI2</a>
-            <a href="Artificial-Intelligence/ai3.html">AI3</a>
-            <a href="Artificial-Intelligence/ai4.html">AI4</a>
-            <a href="Artificial-Intelligence/ai5.html">AI5</a>
+    </section>
+
+    <!-- Motivation Quote -->
+    <section class="quote">
+        <div class="quote-text">
+            “Consistency is the key to success.”
         </div>
+
+        <div class="quote-author">
+            — Abhishek Kumar
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container footer-inner">
+
+        <div>
+            <h3>Computer Science MCQ</h3>
+            <p>
+                By Abhishek Kumar • Practice • Learn • Improve
+            </p>
+        </div>
+
+        <div class="footer-right">
+            <div>Keep Learning • Keep Practicing</div>
+            <div>Made for focused MCQ practice</div>
+        </div>
+
     </div>
+</footer>
 
-</section>
+</body>
+</html>
