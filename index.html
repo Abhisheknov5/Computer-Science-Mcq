@@ -20,9 +20,7 @@
     --border: #dbe7ff;
 }
 
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
     margin: 0;
@@ -82,9 +80,7 @@ body {
     font-weight: 800;
 }
 
-.brand-title span {
-    color: #60a5fa;
-}
+.brand-title span { color: #60a5fa; }
 
 /* Navigation Links */
 .nav-links {
@@ -167,9 +163,7 @@ body {
     line-height: 1.05;
 }
 
-.hero h1 span {
-    color: #60a5fa;
-}
+.hero h1 span { color: #60a5fa; }
 
 .hero p {
     margin: 16px 0 0;
@@ -213,9 +207,7 @@ body {
 }
 
 /* Section */
-.section {
-    margin: 26px 0;
-}
+.section { margin: 26px 0; }
 
 .section-title {
     display: flex;
@@ -242,6 +234,7 @@ body {
     border-radius: 22px;
     padding: 24px;
     box-shadow: 0 12px 35px rgba(29,78,216,.08);
+    margin-bottom: 20px;
 }
 
 .subject-head {
@@ -312,43 +305,6 @@ body {
     box-shadow: 0 11px 20px rgba(37,99,235,.24);
 }
 
-/* More Subjects */
-.more-subjects {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
-
-.coming-card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 22px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 10px 28px rgba(15,23,42,.06);
-}
-
-.coming-card h3 {
-    margin: 0 0 8px;
-    font-size: 21px;
-}
-
-.coming-card p {
-    color: var(--muted);
-    margin: 0 0 16px;
-    line-height: 1.5;
-    font-size: 14px;
-}
-
-.lock {
-    display: inline-block;
-    padding: 8px 11px;
-    border-radius: 9px;
-    background: #f1f5f9;
-    color: #64748b;
-    font-size: 12px;
-    font-weight: 800;
-}
-
 /* Motivation */
 .quote {
     margin: 28px 0;
@@ -389,9 +345,7 @@ body {
     gap: 20px;
 }
 
-.footer h3 {
-    margin: 0 0 5px;
-}
+.footer h3 { margin: 0 0 5px; }
 
 .footer p {
     margin: 0;
@@ -407,59 +361,33 @@ body {
 
 /* Responsive */
 @media (max-width: 900px) {
-    .nav-links {
-        display: none;
-    }
-
-    .quiz-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .more-subjects {
-        grid-template-columns: 1fr;
-    }
+    .nav-links { display: none; }
+    .quiz-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 620px) {
-    .container {
-        width: min(100% - 20px, 1180px);
-    }
-
-    .hero-content {
-        padding: 36px 24px;
-    }
-
-    .subject-card {
-        padding: 17px;
-    }
-
+    .container { width: min(100% - 20px, 1180px); }
+    .hero-content { padding: 36px 24px; }
+    .subject-card { padding: 17px; }
     .quiz-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
     }
-
     .quiz-grid a {
         padding: 11px 5px;
         font-size: 13px;
     }
-
-    .subject-head {
-        align-items: flex-start;
-    }
-
+    .subject-head { align-items: flex-start; }
+    .badge { display: none; }
     .quote {
         flex-direction: column;
         align-items: flex-start;
     }
-
     .footer-inner {
         flex-direction: column;
         align-items: flex-start;
     }
-
-    .footer-right {
-        text-align: left;
-    }
+    .footer-right { text-align: left; }
 }
 </style>
 </head>
@@ -487,7 +415,6 @@ body {
         <!-- Profile -->
         <div class="profile">
             <div class="avatar">A</div>
-
             <div>
                 <div class="profile-name">Abhishek Kumar</div>
                 <div class="profile-sub">Keep Learning</div>
@@ -546,12 +473,8 @@ body {
 
         <!-- Digital Electronics -->
         <div class="subject-card" id="practice">
-
             <div class="subject-head">
-
-                <div class="subject-icon">
-                    ▦
-                </div>
+                <div class="subject-icon">▦</div>
 
                 <div>
                     <h3>Digital Electronics</h3>
@@ -561,113 +484,141 @@ body {
                     </p>
                 </div>
 
-                <div class="badge">
-                    25 Quizzes
-                </div>
-
+                <div class="badge">25 Quizzes</div>
             </div>
 
             <!-- Digital Electronics Quiz Links -->
             <div class="quiz-grid">
-
                 <a href="Digital-Electronics/de1.html">DE1</a>
                 <a href="Digital-Electronics/de2.html">DE2</a>
                 <a href="Digital-Electronics/de3.html">DE3</a>
                 <a href="Digital-Electronics/de4.html">DE4</a>
                 <a href="Digital-Electronics/de5.html">DE5</a>
-
                 <a href="Digital-Electronics/de6.html">DE6</a>
                 <a href="Digital-Electronics/de7.html">DE7</a>
                 <a href="Digital-Electronics/de8.html">DE8</a>
                 <a href="Digital-Electronics/de9.html">DE9</a>
                 <a href="Digital-Electronics/de10.html">DE10</a>
-
                 <a href="Digital-Electronics/de11.html">DE11</a>
                 <a href="Digital-Electronics/de12.html">DE12</a>
                 <a href="Digital-Electronics/de13.html">DE13</a>
                 <a href="Digital-Electronics/de14.html">DE14</a>
                 <a href="Digital-Electronics/de15.html">DE15</a>
-
                 <a href="Digital-Electronics/de16.html">DE16</a>
                 <a href="Digital-Electronics/de17.html">DE17</a>
                 <a href="Digital-Electronics/de18.html">DE18</a>
                 <a href="Digital-Electronics/de19.html">DE19</a>
                 <a href="Digital-Electronics/de20.html">DE20</a>
-
                 <a href="Digital-Electronics/de21.html">DE21</a>
                 <a href="Digital-Electronics/de22.html">DE22</a>
                 <a href="Digital-Electronics/de23.html">DE23</a>
                 <a href="Digital-Electronics/de24.html">DE24</a>
                 <a href="Digital-Electronics/de25.html">DE25</a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- More Subjects Section -->
-    <section class="section">
-
-        <div class="section-title">
-            <div>
-                <h2>More Subjects</h2>
-                <p>
-                    More Computer Science practice sections.
-                </p>
             </div>
         </div>
 
-        <div class="more-subjects">
+        <!-- DBMS -->
+        <div class="subject-card">
+            <div class="subject-head">
+                <div class="subject-icon">DB</div>
 
-            <!-- DBMS -->
-            <div class="coming-card">
-                <h3>DBMS</h3>
-                <p>
-                    Database concepts, SQL, normalization,
-                    transactions and more.
-                </p>
-                <span class="lock">
-                    COMING SOON
-                </span>
+                <div>
+                    <h3>DBMS</h3>
+                    <p>
+                        Database concepts, SQL, normalization,
+                        transactions and more.
+                    </p>
+                </div>
+
+                <div class="badge">5 Quizzes</div>
             </div>
 
-            <!-- DSA -->
-            <div class="coming-card">
-                <h3>DSA</h3>
-                <p>
-                    Arrays, linked lists, stacks, queues,
-                    trees, graphs and algorithms.
-                </p>
-                <span class="lock">
-                    COMING SOON
-                </span>
+            <!-- DBMS Quiz Links -->
+            <div class="quiz-grid">
+                <a href="DBMS/dbms1.html">DBMS1</a>
+                <a href="DBMS/dbms2.html">DBMS2</a>
+                <a href="DBMS/dbms3.html">DBMS3</a>
+                <a href="DBMS/dbms4.html">DBMS4</a>
+                <a href="DBMS/dbms5.html">DBMS5</a>
+            </div>
+        </div>
+
+        <!-- DSA -->
+        <div class="subject-card">
+            <div class="subject-head">
+                <div class="subject-icon">DS</div>
+
+                <div>
+                    <h3>DSA</h3>
+                    <p>
+                        Arrays, linked lists, stacks, queues,
+                        trees, graphs and algorithms.
+                    </p>
+                </div>
+
+                <div class="badge">5 Quizzes</div>
             </div>
 
-            <!-- Operating System -->
-            <div class="coming-card">
-                <h3>Operating System</h3>
-                <p>
-                    Processes, scheduling, memory management,
-                    file systems and more.
-                </p>
-                <span class="lock">
-                    COMING SOON
-                </span>
+            <!-- DSA Quiz Links -->
+            <div class="quiz-grid">
+                <a href="DSA/dsa1.html">DSA1</a>
+                <a href="DSA/dsa2.html">DSA2</a>
+                <a href="DSA/dsa3.html">DSA3</a>
+                <a href="DSA/dsa4.html">DSA4</a>
+                <a href="DSA/dsa5.html">DSA5</a>
+            </div>
+        </div>
+
+        <!-- Operating System -->
+        <div class="subject-card">
+            <div class="subject-head">
+                <div class="subject-icon">OS</div>
+
+                <div>
+                    <h3>Operating System</h3>
+                    <p>
+                        Processes, scheduling, memory management,
+                        file systems and more.
+                    </p>
+                </div>
+
+                <div class="badge">5 Quizzes</div>
             </div>
 
-            <!-- Artificial Intelligence -->
-            <div class="coming-card">
-                <h3>Artificial Intelligence</h3>
-                <p>
-                    AI concepts, search techniques,
-                    knowledge representation and more.
-                </p>
-                <span class="lock">
-                    COMING SOON
-                </span>
+            <!-- Operating System Quiz Links -->
+            <div class="quiz-grid">
+                <a href="Operating-System/os1.html">OS1</a>
+                <a href="Operating-System/os2.html">OS2</a>
+                <a href="Operating-System/os3.html">OS3</a>
+                <a href="Operating-System/os4.html">OS4</a>
+                <a href="Operating-System/os5.html">OS5</a>
+            </div>
+        </div>
+
+        <!-- Artificial Intelligence -->
+        <div class="subject-card">
+            <div class="subject-head">
+                <div class="subject-icon">AI</div>
+
+                <div>
+                    <h3>Artificial Intelligence</h3>
+                    <p>
+                        AI concepts, search techniques,
+                        knowledge representation and more.
+                    </p>
+                </div>
+
+                <div class="badge">5 Quizzes</div>
             </div>
 
+            <!-- Artificial Intelligence Quiz Links -->
+            <div class="quiz-grid">
+                <a href="Artificial-Intelligence/ai1.html">AI1</a>
+                <a href="Artificial-Intelligence/ai2.html">AI2</a>
+                <a href="Artificial-Intelligence/ai3.html">AI3</a>
+                <a href="Artificial-Intelligence/ai4.html">AI4</a>
+                <a href="Artificial-Intelligence/ai5.html">AI5</a>
+            </div>
         </div>
 
     </section>
