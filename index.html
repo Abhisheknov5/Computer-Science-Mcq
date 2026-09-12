@@ -1,1 +1,167 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Computer Science MCQ</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #1f2937;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 25px 15px;
+}
+
+.header {
+    text-align: center;
+    background: #2563eb;
+    color: white;
+    padding: 35px 20px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    margin: 0 0 10px;
+    font-size: 34px;
+}
+
+.header p {
+    margin: 0;
+    font-size: 17px;
+}
+
+.subject {
+    background: white;
+    padding: 22px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.subject h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.buttons a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: #2563eb;
+    color: white;
+    padding: 13px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.buttons a:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+.disabled {
+    background: #9ca3af !important;
+    pointer-events: none;
+}
+
+.footer {
+    text-align: center;
+    color: #6b7280;
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 27px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Computer Science MCQ</h1>
+        <p>Online MCQ Practice Portal</p>
+    </div>
+
+    <!-- Digital Electronics -->
+    <div class="subject">
+        <h2>Digital Electronics</h2>
+
+        <div class="buttons">
+            <a href="Digital-Electronics/de1.html">DE1</a>
+            <a href="Digital-Electronics/de2.html">DE2</a>
+            <a class="disabled" href="#">DE3</a>
+            <a class="disabled" href="#">DE4</a>
+        </div>
+    </div>
+
+    <!-- DBMS -->
+    <div class="subject">
+        <h2>DBMS</h2>
+
+        <div class="buttons">
+            <a class="disabled" href="#">DBMS 1</a>
+            <a class="disabled" href="#">DBMS 2</a>
+            <a class="disabled" href="#">DBMS 3</a>
+            <a class="disabled" href="#">DBMS 4</a>
+        </div>
+    </div>
+
+    <!-- DSA -->
+    <div class="subject">
+        <h2>DSA</h2>
+
+        <div class="buttons">
+            <a class="disabled" href="#">DSA 1</a>
+            <a class="disabled" href="#">DSA 2</a>
+            <a class="disabled" href="#">DSA 3</a>
+            <a class="disabled" href="#">DSA 4</a>
+        </div>
+    </div>
+
+    <!-- Operating System -->
+    <div class="subject">
+        <h2>Operating System</h2>
+
+        <div class="buttons">
+            <a class="disabled" href="#">OS 1</a>
+            <a class="disabled" href="#">OS 2</a>
+            <a class="disabled" href="#">OS 3</a>
+            <a class="disabled" href="#">OS 4</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        Computer Science MCQ Practice
+    </div>
+
+</div>
+
+</body>
+</html>
