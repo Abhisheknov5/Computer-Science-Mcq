@@ -1,1 +1,821 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Excess-3 Code MCQ Practice</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f3f4f6;
+    margin:0;
+    color:#1f2937;
+}
+
+.wrap{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:#fff;
+    padding:24px;
+    border-radius:14px;
+    box-shadow:0 2px 10px #0001;
+    margin-bottom:16px;
+}
+
+.option{
+    display:block;
+    width:100%;
+    text-align:left;
+    padding:14px;
+    margin:10px 0;
+    background:white;
+    border:1px solid #d1d5db;
+    border-radius:9px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.selected{
+    border:2px solid #2563eb;
+    background:#eff6ff;
+}
+
+button{
+    padding:11px 16px;
+    border:0;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    margin:4px;
+}
+
+.primary{
+    background:#2563eb;
+    color:white;
+}
+
+.secondary{
+    background:#e5e7eb;
+}
+
+.hidden{
+    display:none;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.correct{
+    background:#dcfce7;
+    border-color:#16a34a;
+}
+
+.wrong{
+    background:#fee2e2;
+    border-color:#dc2626;
+}
+
+.explain{
+    margin-top:14px;
+    padding:14px;
+    background:#f8fafc;
+    border-radius:8px;
+    line-height:1.5;
+}
+
+#palette button{
+    min-width:42px;
+}
+
+.done{
+    background:#bbf7d0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div id="quiz">
+
+<div class="card top">
+
+<b id="progress"></b>
+
+<b>Topic: Excess-3 Code</b>
+
+</div>
+
+
+<div class="card">
+
+<h2 id="question"></h2>
+
+<div id="options"></div>
+
+<div id="explanation" class="hidden explain"></div>
+
+</div>
+
+
+<div class="card top">
+
+<div>
+
+<button class="secondary" onclick="prev()">Previous</button>
+
+<button class="primary" onclick="next()">Next</button>
+
+</div>
+
+<button onclick="finish()">Submit Test</button>
+
+</div>
+
+
+<div id="palette" class="card"></div>
+
+</div>
+
+
+<div id="result" class="card hidden">
+
+<h1>🎯 Result</h1>
+
+<h2 id="score"></h2>
+
+<p id="stats"></p>
+
+<button class="primary" onclick="review()">
+Review Answers & Explanations
+</button>
+
+<button class="secondary" onclick="location.reload()">
+Try Again
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+const qs = [
+
+{
+id:1,
+question:"Why is Excess-3 code considered self-complementary?",
+options:[
+"1's complement of the code gives the Excess-3 of 9's complement",
+"It can directly represent negative numbers",
+"Its codes add up to 9 when complemented",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"This is the key property of Excess-3. Complementing the bits gives the Excess-3 code of the 9's complement."
+},
+
+{
+id:2,
+question:"What is the Excess-3 code for decimal digit 2?",
+options:[
+"0101",
+"0010",
+"1010",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"2 + 3 = 5. Binary representation of 5 is 0101."
+},
+
+{
+id:3,
+question:"What is the Excess-3 code for decimal 0?",
+options:[
+"0011",
+"0000",
+"1000",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"0 + 3 = 3. Binary representation of 3 is 0011."
+},
+
+{
+id:4,
+question:"Which of the following are valid properties of Excess-3 code?",
+options:[
+"Biased representation",
+"Weighted code",
+"Positional value",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"Excess-3 is a biased code because a bias of 3 is added to the actual decimal digit."
+},
+
+{
+id:5,
+question:"What is the Excess-3 code for decimal digit 9?",
+options:[
+"1100",
+"1001",
+"1111",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"9 + 3 = 12. Binary representation of 12 is 1100."
+},
+
+{
+id:6,
+question:"What kind of code is Excess-3?",
+options:[
+"Weighted",
+"Unweighted",
+"BCD positional",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"Excess-3 is an unweighted code because fixed positional weights are not assigned to its bits."
+},
+
+{
+id:7,
+question:"How can we convert a decimal digit to Excess-3 code?",
+options:[
+"Add 3 and convert to binary",
+"Subtract 3 and convert to binary",
+"Use 2's complement",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"To obtain Excess-3 code, add 3 to the decimal digit and then convert the result into binary."
+},
+
+{
+id:8,
+question:"Which code is not used in Excess-3 representation?",
+options:[
+"0000",
+"1111",
+"0100",
+"More than one of the above",
+"None of the above"
+],
+answer:"d",
+explanation:"Both 0000 and 1111 are unused in Excess-3 representation."
+},
+
+{
+id:9,
+question:"What is the benefit of not using 0000 and 1111 in Excess-3?",
+options:[
+"Avoids logic gate failure",
+"Prevents transmission faults",
+"Ensures higher memory speed",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"The unused codes can help identify invalid states and improve reliability during transmission."
+},
+
+{
+id:10,
+question:"Which Excess-3 code corresponds to decimal 6?",
+options:[
+"1001",
+"0110",
+"1010",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"6 + 3 = 9. Binary representation of 9 is 1001."
+},
+
+{
+id:11,
+question:"The Excess-3 code for 3 is:",
+options:[
+"0110",
+"0011",
+"0100",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"3 + 3 = 6. Binary representation of 6 is 0110."
+},
+
+{
+id:12,
+question:"Which of the following are true for Excess-3 codes?",
+options:[
+"They are self-complementary",
+"They are used for hexadecimal conversion",
+"They are weighted codes",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"Excess-3 is self-complementary. Its 1's complement gives the code for the 9's complement."
+},
+
+{
+id:13,
+question:"What is the main use of Excess-3 code in arithmetic?",
+options:[
+"Simplifies addition when sum > 9",
+"Used in subtraction only",
+"Converts binary to Gray",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"Excess-3 code is useful in decimal arithmetic and can simplify certain addition operations."
+},
+
+{
+id:14,
+question:"The binary 1000 is Excess-3 code for which decimal digit?",
+options:[
+"5",
+"6",
+"3",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"Binary 1000 equals decimal 8. Subtract the Excess-3 bias: 8 - 3 = 5."
+},
+
+{
+id:15,
+question:"Which is the correct Excess-3 code for 8?",
+options:[
+"1011",
+"1000",
+"1110",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"8 + 3 = 11. Binary representation of 11 is 1011."
+},
+
+{
+id:16,
+question:"Excess-3 codes are mainly used because:",
+options:[
+"They support direct 9's complement",
+"They handle decimal digit overflows better",
+"They simplify BCD math",
+"More than one of the above",
+"None of the above"
+],
+answer:"d",
+explanation:"According to the given MCQ, more than one listed benefit applies to Excess-3 code."
+},
+
+{
+id:17,
+question:"What is the 1's complement of Excess-3 code for digit 4 (0111)?",
+options:[
+"1000",
+"0000",
+"1001",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"The 1's complement of 0111 is 1000."
+},
+
+{
+id:18,
+question:"Excess-3 of 9's complement of 6 will be:",
+options:[
+"0100",
+"0110",
+"0111",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"The 9's complement of 6 is 3. Excess-3 of 3 means 3 + 3 = 6, whose binary representation is 0110."
+},
+
+{
+id:19,
+question:"What is the Excess-3 code for decimal number 31?",
+options:[
+"0110 0100",
+"0110 0001",
+"0100 0110",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"For 3: 3 + 3 = 6 = 0110. For 1: 1 + 3 = 4 = 0100. Therefore 31 = 0110 0100."
+},
+
+{
+id:20,
+question:"Which of the following statements are true for self-complementary codes?",
+options:[
+"1's complement gives code of 9's complement",
+"Useful in subtraction",
+"Converts directly to 8421",
+"More than one of the above",
+"None of the above"
+],
+answer:"d",
+explanation:"According to the given MCQ, more than one statement is considered true."
+},
+
+{
+id:21,
+question:"What is the Excess-3 code of decimal digit 1?",
+options:[
+"0100",
+"0001",
+"0010",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"1 + 3 = 4. Binary representation of 4 is 0100."
+},
+
+{
+id:22,
+question:"Which of the following is an invalid Excess-3 code?",
+options:[
+"0000",
+"0011",
+"1100",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"0000 is invalid in Excess-3. Valid Excess-3 codes range from 0011 to 1100."
+},
+
+{
+id:23,
+question:"How many valid Excess-3 codes exist for digits 0–9?",
+options:[
+"10",
+"8",
+"9",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"Excess-3 represents all ten decimal digits from 0 through 9."
+},
+
+{
+id:24,
+question:"What is the Excess-3 code for decimal digit 7?",
+options:[
+"1010",
+"1001",
+"0111",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"7 + 3 = 10. Binary representation of 10 is 1010."
+},
+
+{
+id:25,
+question:'The term "XS-3" refers to:',
+options:[
+"Excess-3 code",
+"Extended sign 3 code",
+"Extra segment 3",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"XS-3 is the commonly used abbreviation for Excess-3 code."
+},
+
+{
+id:26,
+question:"Excess-3 code differs from normal BCD in that:",
+options:[
+"It adds 3 to every digit",
+"It is positional",
+"It represents hexadecimal",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"The main difference is that Excess-3 adds a bias of 3 to each decimal digit before binary encoding."
+},
+
+{
+id:27,
+question:"Why is Excess-3 considered more reliable in transmission?",
+options:[
+"Because it avoids 0000 and 1111",
+"Because it uses error correction",
+"Because it is a 2-bit code",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"According to the given MCQ, Excess-3 avoids the extreme binary codes 0000 and 1111."
+},
+
+{
+id:28,
+question:"What makes Excess-3 arithmetic easier?",
+options:[
+"Uniform spacing",
+"Self-complementing behavior",
+"Skipping of extreme binary codes",
+"More than one of the above",
+"None of the above"
+],
+answer:"d",
+explanation:"According to the given MCQ, more than one listed feature contributes to easier arithmetic."
+},
+
+{
+id:29,
+question:"In Excess-3, what is the binary code for decimal 5?",
+options:[
+"1000",
+"0101",
+"1100",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"5 + 3 = 8. Binary representation of 8 is 1000."
+},
+
+{
+id:30,
+question:"Which property helps Excess-3 code in subtraction operations?",
+options:[
+"It is self-complementary",
+"It uses Gray code",
+"It is positional",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"The self-complementary property allows easy handling of 9's complements in subtraction."
+}
+
+];
+
+
+let idx = 0;
+let ans = {};
+let reviewMode = false;
+
+
+function render(){
+
+let q = qs[idx];
+
+document.getElementById("progress").textContent =
+`Question ${idx+1} of ${qs.length}`;
+
+
+document.getElementById("question").textContent =
+q.question;
+
+
+let box = document.getElementById("options");
+
+box.innerHTML = "";
+
+
+q.options.forEach((o,i)=>{
+
+let l = "abcde"[i];
+
+let b = document.createElement("button");
+
+b.className =
+"option" + (ans[q.id] === l ? " selected" : "");
+
+b.textContent =
+l.toUpperCase() + ") " + o;
+
+
+if(reviewMode){
+
+b.disabled = true;
+
+if(l === q.answer){
+
+b.classList.add("correct");
+
+}
+
+if(ans[q.id] === l && l !== q.answer){
+
+b.classList.add("wrong");
+
+}
+
+}
+
+else{
+
+b.onclick = ()=>{
+
+ans[q.id] = l;
+
+render();
+
+};
+
+}
+
+
+box.appendChild(b);
+
+});
+
+
+let ex = document.getElementById("explanation");
+
+
+if(reviewMode){
+
+ex.classList.remove("hidden");
+
+ex.innerHTML =
+"<b>Correct Answer: " +
+q.answer.toUpperCase() +
+") " +
+q.options["abcde".indexOf(q.answer)] +
+"</b><br><br><b>Explanation:</b> " +
+q.explanation;
+
+}
+
+else{
+
+ex.classList.add("hidden");
+
+}
+
+
+let p = document.getElementById("palette");
+
+p.innerHTML =
+"<b>Question Palette</b><br>";
+
+
+qs.forEach((x,i)=>{
+
+let b =
+document.createElement("button");
+
+b.textContent = i + 1;
+
+
+if(ans[x.id]){
+
+b.classList.add("done");
+
+}
+
+
+b.onclick = ()=>{
+
+idx = i;
+
+render();
+
+};
+
+
+p.appendChild(b);
+
+});
+
+}
+
+
+function prev(){
+
+if(idx > 0){
+
+idx--;
+
+render();
+
+}
+
+}
+
+
+function next(){
+
+if(idx < qs.length - 1){
+
+idx++;
+
+render();
+
+}
+
+}
+
+
+function finish(){
+
+if(!confirm("Submit your test?")) return;
+
+
+document.getElementById("quiz")
+.classList.add("hidden");
+
+
+document.getElementById("result")
+.classList.remove("hidden");
+
+
+let correct =
+qs.filter(q => ans[q.id] === q.answer).length;
+
+
+let attempted =
+Object.keys(ans).length;
+
+
+document.getElementById("score")
+.textContent =
+`Score: ${correct} / ${qs.length}`;
+
+
+document.getElementById("stats")
+.textContent =
+`Attempted: ${attempted} | Correct: ${correct} | Wrong: ${attempted-correct} | Unattempted: ${qs.length-attempted}`;
+
+}
+
+
+function review(){
+
+reviewMode = true;
+
+
+document.getElementById("result")
+.classList.add("hidden");
+
+
+document.getElementById("quiz")
+.classList.remove("hidden");
+
+
+idx = 0;
+
+render();
+
+}
+
+
+render();
+
+</script>
+
+</body>
+</html>
