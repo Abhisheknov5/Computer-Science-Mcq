@@ -1,1 +1,919 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Gray Code MCQ Practice</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f3f4f6;
+  margin:0;
+  color:#1f2937;
+}
+
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  padding:24px;
+  border-radius:14px;
+  box-shadow:0 2px 10px #0001;
+  margin-bottom:16px;
+}
+
+.option{
+  display:block;
+  width:100%;
+  text-align:left;
+  padding:14px;
+  margin:10px 0;
+  background:white;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.selected{
+  border:2px solid #2563eb;
+  background:#eff6ff;
+}
+
+button,select{
+  padding:11px 16px;
+  border:0;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:16px;
+  margin:4px;
+}
+
+.primary{
+  background:#2563eb;
+  color:white;
+}
+
+.secondary{
+  background:#e5e7eb;
+}
+
+.hidden{
+  display:none;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.correct{
+  background:#dcfce7;
+  border:2px solid #16a34a;
+}
+
+.wrong{
+  background:#fee2e2;
+  border:2px solid #dc2626;
+}
+
+.explain{
+  margin-top:14px;
+  padding:14px;
+  background:#f8fafc;
+  border-radius:8px;
+  line-height:1.6;
+}
+
+#palette button{
+  min-width:42px;
+}
+
+.done{
+  background:#bbf7d0;
+}
+
+.current{
+  outline:2px solid #2563eb;
+}
+
+.small{
+  color:#6b7280;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div id="home" class="card">
+
+<h1>🔢 Gray Code MCQ Practice</h1>
+
+<p class="small">
+30 Questions | Random Practice | Answers & Explanations
+</p>
+
+<label>
+How many questions do you want to practice?
+</label>
+
+<br><br>
+
+<select id="count">
+<option value="5">5 Questions</option>
+<option value="10">10 Questions</option>
+<option value="15">15 Questions</option>
+<option value="20">20 Questions</option>
+<option value="30">All 30 Questions</option>
+</select>
+
+<br><br>
+
+<button class="primary" onclick="startQuiz()">
+Start Practice
+</button>
+
+</div>
+
+
+<div id="quiz" class="hidden">
+
+<div class="card top">
+<b id="progress"></b>
+<b>Topic: Gray Code</b>
+</div>
+
+<div class="card">
+
+<h2 id="question"></h2>
+
+<div id="options"></div>
+
+<div id="explanation" class="hidden explain"></div>
+
+</div>
+
+<div class="card top">
+
+<div>
+<button class="secondary" onclick="prevQuestion()">
+Previous
+</button>
+
+<button class="primary" onclick="nextQuestion()">
+Next
+</button>
+</div>
+
+<button class="primary" onclick="finishQuiz()">
+Submit Test
+</button>
+
+</div>
+
+<div id="palette" class="card"></div>
+
+</div>
+
+
+<div id="result" class="card hidden">
+
+<h1>🎯 Result</h1>
+
+<h2 id="score"></h2>
+
+<p id="stats"></p>
+
+<button class="primary" onclick="reviewAnswers()">
+Review Answers & Explanations
+</button>
+
+<button class="secondary" onclick="restartQuiz()">
+Try Again
+</button>
+
+<button class="secondary" onclick="goHome()">
+Home
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+const allQuestions = [
+
+{
+id:1,
+question:"What is the primary characteristic of Gray Code?",
+options:[
+"All bits change from one number to the next",
+"All bits are inverted in each step",
+"Only one bit changes between successive numbers",
+"More than one of the above",
+"None of the above"
+],
+answer:"c",
+explanation:"Gray Code ensures that only one bit changes at a time between consecutive values. This reduces errors in digital systems."
+},
+
+{
+id:2,
+question:"Why is Gray Code called reflected binary code?",
+options:[
+"Because each number is the reverse of binary",
+"Because the second half is the reflection of the first half",
+"Because it reflects decimal values",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"In Gray Code generation, the second half of the sequence is a reflection of the first half."
+},
+
+{
+id:3,
+question:"Which of the following is a key advantage of Gray Code?",
+options:[
+"It reduces errors during transition",
+"It uses fewer bits than binary",
+"It supports arithmetic operations efficiently",
+"More than one of the above",
+"None of the above"
+],
+answer:"a",
+explanation:"Because only one bit changes at a time, transition errors are reduced."
+},
+
+{
+id:4,
+question:"What is the Gray Code equivalent of decimal number 3 (binary 0011)?",
+options:[
+"0011",
+"0010",
+"0001",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"Gray Code for decimal 3 is 0010."
+},
+
+{
+id:5,
+question:"Which method is used to generate Gray Code recursively?",
+options:[
+"Append and Reverse",
+"Prefix and Reflect",
+"Shift and Add",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"Gray Code can be generated using the Prefix and Reflect method."
+},
+
+{
+id:6,
+question:"In a 4-bit Gray Code sequence, how many total values exist?",
+options:[
+"8",
+"16",
+"32",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"A 4-bit code can represent 2^4 = 16 unique values."
+},
+
+{
+id:7,
+question:"Which of the following correctly represents the Gray Code for binary 1010 (decimal 10)?",
+options:[
+"1010",
+"1111",
+"1001",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"The Gray Code equivalent of binary 1010 is 1111."
+},
+
+{
+id:8,
+question:"In which of the following applications is Gray Code most useful?",
+options:[
+"Sorting algorithms",
+"Mechanical rotary encoders",
+"Digital encryption",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"Gray Code is commonly used in mechanical rotary encoders to reduce transition errors."
+},
+
+{
+id:9,
+question:"How many bits differ between any two consecutive Gray Code values?",
+options:[
+"Two",
+"One",
+"Zero",
+"More than one of the above",
+"None of the above"
+],
+answer:"b",
+explanation:"The core property of Gray Code is that only one bit changes between consecutive values."
+},
+
+{
+id:10,
+question:"Which of the following statements about Gray Code is/are true?",
+options:[
+"It is a cyclic code",
+"It is a weighted code",
+"It ensures only one bit change per transition",
+"More than one of the above",
+"None of the above"
+],
+answer:"d",
+explanation:"According to the provided answer set, the correct answer is More than one of the above."
+},
+
+{
+id:11,
+question:"What is the key property of Gray Code?",
+options:[
+"It changes multiple bits at a time",
+"It only changes one bit at a time between successive values",
+"It changes bits in a fixed order",
+"It uses more memory than binary",
+"None of the above"
+],
+answer:"b",
+explanation:"Gray Code is designed so that only one bit changes between successive values."
+},
+
+{
+id:12,
+question:"What is the Gray Code equivalent of binary 1001?",
+options:[
+"1100",
+"1010",
+"1110",
+"1000",
+"None of the above"
+],
+answer:"b",
+explanation:"The Gray Code for binary 1001 is 1010."
+},
+
+{
+id:13,
+question:"How many Gray Code values are there for a 3-bit number?",
+options:[
+"2",
+"4",
+"6",
+"8",
+"None of the above"
+],
+answer:"d",
+explanation:"For an n-bit Gray Code, there are 2^n values. For 3 bits, there are 8 values."
+},
+
+{
+id:14,
+question:"Which of the following binary numbers corresponds to the Gray Code 1101?",
+options:[
+"1111",
+"1001",
+"1011",
+"1110",
+"None of the above"
+],
+answer:"b",
+explanation:"The binary number corresponding to Gray Code 1101 is 1001."
+},
+
+{
+id:15,
+question:"How is the Gray Code generated for a given number of bits?",
+options:[
+"Reflect the previous Gray Code sequence and prefix the original with 0 and the reflected sequence with 1",
+"XOR the binary number with its previous binary value",
+"Mirror the number in reverse order",
+"Increment the binary sequence and append the bits",
+"None of the above"
+],
+answer:"a",
+explanation:"The standard method reflects the previous sequence and prefixes the original with 0 and reflected sequence with 1."
+},
+
+{
+id:16,
+question:"Which Gray Code sequence is correct for 2-bit Gray Code?",
+options:[
+"00, 01, 11, 10",
+"00, 10, 11, 01",
+"00, 01, 10, 11",
+"00, 11, 01, 10",
+"None of the above"
+],
+answer:"a",
+explanation:"The correct 2-bit Gray Code sequence is 00, 01, 11, 10."
+},
+
+{
+id:17,
+question:"What happens when a binary number is converted to Gray Code?",
+options:[
+"The least significant bit remains the same",
+"The most significant bit becomes 0",
+"The binary number is reflected",
+"Every bit is changed",
+"None of the above"
+],
+answer:"a",
+explanation:"According to the provided answer set, the least significant bit remains the same."
+},
+
+{
+id:18,
+question:"What is the Gray Code for the binary number 110?",
+options:[
+"101",
+"100",
+"111",
+"011",
+"None of the above"
+],
+answer:"a",
+explanation:"For binary 110, the Gray Code is 101."
+},
+
+{
+id:19,
+question:"How do you generate Gray Code for a 4-bit number?",
+options:[
+"Start with 0000, reflect it, and then prefix the original sequence with 0 and the reflected with 1",
+"XOR each bit of the binary number with the bit just before it",
+"Reverse the binary number and add 1 at the end",
+"Increment the number and convert to binary",
+"None of the above"
+],
+answer:"a",
+explanation:"Gray Code can be generated recursively by reflecting the previous sequence and adding prefixes."
+},
+
+{
+id:20,
+question:"Which of the following Gray Code values corresponds to binary 0101?",
+options:[
+"0110",
+"0100",
+"1001",
+"1010",
+"None of the above"
+],
+answer:"a",
+explanation:"The Gray Code equivalent of binary 0101 is 0110."
+},
+
+{
+id:21,
+question:"What is the first step in generating Gray Code for a given number of bits?",
+options:[
+"Convert decimal to binary",
+"Reflect the binary values",
+"Determine the number of bits required",
+"Flip all bits",
+"None of the above"
+],
+answer:"c",
+explanation:"The first step is to determine how many bits are required."
+},
+
+{
+id:22,
+question:"What is the Gray Code for binary 0100?",
+options:[
+"0110",
+"0101",
+"0010",
+"0111",
+"None of the above"
+],
+answer:"a",
+explanation:"Binary 0100 corresponds to Gray Code 0110."
+},
+
+{
+id:23,
+question:"Which of the following rules is used in Gray Code generation?",
+options:[
+"Each next code changes exactly 2 bits",
+"Reflect the previous list and prefix 1s and 0s accordingly",
+"Convert each binary to its complement",
+"Add parity bit to binary",
+"None of the above"
+],
+answer:"b",
+explanation:"Gray Code generation uses reflection of the previous list with appropriate prefixes."
+},
+
+{
+id:24,
+question:"How is the first Gray Code starting point typically initialized?",
+options:[
+"All bits set to 1",
+"All bits inverted",
+"All bits set to 0",
+"Random bit pattern",
+"None of the above"
+],
+answer:"c",
+explanation:"The Gray Code sequence starts from 000...0."
+},
+
+{
+id:25,
+question:"In Gray Code generation, what is the purpose of prefixing 1s and 0s?",
+options:[
+"To reduce code length",
+"To generate mirrored sequences",
+"To preserve arithmetic sequence",
+"To add redundancy",
+"None of the above"
+],
+answer:"b",
+explanation:"Prefixing helps create the reflected or mirrored sequence property of Gray Code."
+},
+
+{
+id:26,
+question:"For 2-bit Gray Code, what is the correct sequence?",
+options:[
+"00, 10, 11, 01",
+"00, 01, 11, 10",
+"00, 11, 01, 10",
+"00, 01, 10, 11",
+"None of the above"
+],
+answer:"b",
+explanation:"The standard 2-bit Gray Code sequence is 00, 01, 11, 10."
+},
+
+{
+id:27,
+question:"What is the Gray Code equivalent of binary 1011?",
+options:[
+"1110",
+"1101",
+"1001",
+"1111",
+"None of the above"
+],
+answer:"a",
+explanation:"According to the provided answer, binary 1011 corresponds to Gray Code 1110."
+},
+
+{
+id:28,
+question:"Which bit is changed first while generating Gray Code recursively?",
+options:[
+"Least Significant Bit (LSB)",
+"Second LSB",
+"Most Significant Bit (MSB)",
+"Random Bit",
+"None of the above"
+],
+answer:"c",
+explanation:"According to the provided answer set, the Most Significant Bit (MSB) is changed first."
+},
+
+{
+id:29,
+question:"If the current Gray Code is already present, what should be done next?",
+options:[
+"Stop the process",
+"Restart from zero",
+"Change the next significant bit",
+"Invert all bits",
+"None of the above"
+],
+answer:"c",
+explanation:"If the code is already generated, move to the next significant bit for change."
+},
+
+{
+id:30,
+question:"Which technique is primarily used in the recursive Gray Code generation?",
+options:[
+"Divide and conquer",
+"Dynamic programming",
+"Prefix and reflect",
+"Greedy algorithm",
+"None of the above"
+],
+answer:"c",
+explanation:"Gray Code is generated recursively using the Prefix and Reflect technique."
+}
+
+];
+
+
+let qs = [];
+let idx = 0;
+let ans = {};
+let reviewMode = false;
+
+
+function shuffle(array){
+return [...array].sort(()=>Math.random()-0.5);
+}
+
+
+function startQuiz(){
+
+let count = Number(
+document.getElementById("count").value
+);
+
+qs = shuffle(allQuestions).slice(0,count);
+
+idx = 0;
+ans = {};
+reviewMode = false;
+
+document.getElementById("home").classList.add("hidden");
+
+document.getElementById("result").classList.add("hidden");
+
+document.getElementById("quiz").classList.remove("hidden");
+
+renderQuestion();
+
+}
+
+
+function renderQuestion(){
+
+let q = qs[idx];
+
+document.getElementById("progress").textContent =
+"Question " + (idx+1) + " of " + qs.length;
+
+document.getElementById("question").textContent =
+q.question;
+
+let box = document.getElementById("options");
+
+box.innerHTML = "";
+
+q.options.forEach((option,i)=>{
+
+let letters = "abcde";
+
+let letter = letters[i];
+
+let button = document.createElement("button");
+
+button.className =
+"option" +
+(ans[q.id] === letter ? " selected" : "");
+
+button.textContent =
+letter.toUpperCase() + ") " + option;
+
+
+if(reviewMode){
+
+button.disabled = true;
+
+if(letter === q.answer){
+button.classList.add("correct");
+}
+
+if(
+ans[q.id] === letter &&
+letter !== q.answer
+){
+button.classList.add("wrong");
+}
+
+}else{
+
+button.onclick = ()=>{
+
+ans[q.id] = letter;
+
+renderQuestion();
+
+};
+
+}
+
+box.appendChild(button);
+
+});
+
+
+let explanation =
+document.getElementById("explanation");
+
+
+if(reviewMode){
+
+explanation.classList.remove("hidden");
+
+explanation.innerHTML =
+"<b>Correct Answer: " +
+q.answer.toUpperCase() +
+") " +
+q.options["abcde".indexOf(q.answer)] +
+"</b><br><br>" +
+"<b>Explanation:</b> " +
+q.explanation;
+
+}else{
+
+explanation.classList.add("hidden");
+
+}
+
+
+renderPalette();
+
+}
+
+
+function renderPalette(){
+
+let palette =
+document.getElementById("palette");
+
+palette.innerHTML =
+"<b>Question Palette</b><br>";
+
+
+qs.forEach((q,i)=>{
+
+let button =
+document.createElement("button");
+
+button.textContent = i+1;
+
+
+if(ans[q.id]){
+button.classList.add("done");
+}
+
+
+if(i === idx){
+button.classList.add("current");
+}
+
+
+button.onclick = ()=>{
+
+idx = i;
+
+renderQuestion();
+
+};
+
+
+palette.appendChild(button);
+
+});
+
+}
+
+
+function prevQuestion(){
+
+if(idx > 0){
+
+idx--;
+
+renderQuestion();
+
+}
+
+}
+
+
+function nextQuestion(){
+
+if(idx < qs.length-1){
+
+idx++;
+
+renderQuestion();
+
+}
+
+}
+
+
+function finishQuiz(){
+
+if(!confirm("Submit your test?")){
+return;
+}
+
+
+let correct =
+qs.filter(
+q => ans[q.id] === q.answer
+).length;
+
+
+let attempted =
+Object.keys(ans).length;
+
+
+document.getElementById("score").textContent =
+"Score: " +
+correct +
+" / " +
+qs.length;
+
+
+document.getElementById("stats").textContent =
+"Attempted: " +
+attempted +
+" | Correct: " +
+correct +
+" | Wrong: " +
+(attempted-correct) +
+" | Unattempted: " +
+(qs.length-attempted);
+
+
+document.getElementById("quiz")
+.classList.add("hidden");
+
+document.getElementById("result")
+.classList.remove("hidden");
+
+}
+
+
+function reviewAnswers(){
+
+reviewMode = true;
+
+idx = 0;
+
+document.getElementById("result")
+.classList.add("hidden");
+
+document.getElementById("quiz")
+.classList.remove("hidden");
+
+renderQuestion();
+
+}
+
+
+function restartQuiz(){
+
+startQuiz();
+
+}
+
+
+function goHome(){
+
+document.getElementById("result")
+.classList.add("hidden");
+
+document.getElementById("quiz")
+.classList.add("hidden");
+
+document.getElementById("home")
+.classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
