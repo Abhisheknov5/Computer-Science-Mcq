@@ -1,1 +1,169 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Signed & Unsigned Binary Numbers - MCQ Practice</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f3f4f6;margin:0;color:#1f2937}
+.wrap{max-width:900px;margin:auto;padding:20px}
+.card{background:#fff;padding:24px;border-radius:14px;box-shadow:0 2px 10px #0001;margin-bottom:16px}
+.topic,.option{display:block;width:100%;text-align:left;padding:14px;margin:10px 0;background:white;border:1px solid #d1d5db;border-radius:9px;font-size:16px;cursor:pointer}
+.topic{font-weight:bold}
+.selected{border:2px solid #2563eb;background:#eff6ff}
+button{padding:11px 16px;border:0;border-radius:8px;cursor:pointer;font-size:16px;margin:4px}
+.primary{background:#2563eb;color:white}.secondary{background:#e5e7eb}
+.hidden{display:none}.top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.correct{background:#dcfce7;border-color:#16a34a}.wrong{background:#fee2e2;border-color:#dc2626}
+.explain{margin-top:14px;padding:14px;background:#f8fafc;border-radius:8px;line-height:1.6}
+#palette button{min-width:42px}.done{background:#bbf7d0}
+.small{color:#6b7280}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="home" class="card">
+<h1>📚 Signed & Unsigned Binary Numbers</h1>
+<p class="small">Select a topic to start practice.</p>
+<div id="topicList"></div>
+</div>
+
+<div id="quiz" class="hidden">
+<div class="card top">
+<b id="progress"></b>
+<b id="topicTitle"></b>
+</div>
+
+<div class="card">
+<h2 id="question"></h2>
+<div id="options"></div>
+<div id="explanation" class="hidden explain"></div>
+</div>
+
+<div class="card top">
+<div>
+<button class="secondary" onclick="prev()">Previous</button>
+<button class="primary" onclick="next()">Next</button>
+</div>
+<div>
+<button class="secondary" onclick="goHome()">Topics</button>
+<button onclick="finish()">Submit Test</button>
+</div>
+</div>
+
+<div id="palette" class="card"></div>
+</div>
+
+<div id="result" class="card hidden">
+<h1>🎯 Result</h1>
+<h2 id="score"></h2>
+<p id="stats"></p>
+<button class="primary" onclick="review()">Review Answers & Explanations</button>
+<button class="secondary" onclick="restart()">Try Again</button>
+<button onclick="goHome()">Back to Topics</button>
+</div>
+
+</div>
+
+<script>
+const topics = {"Signed and Unsigned Binary Numbers": [{"id": 1, "topic": "Signed and Unsigned Binary Numbers", "question": "What is the key feature of a signed binary number?", "options": ["It only stores positive numbers", "It uses all bits for magnitude", "It uses a bit to represent the sign", "More than above", "None of the above"], "answer": "c", "explanation": "Signed binary numbers reserve the most significant bit (MSB) to indicate the sign.\n\n* 0 = positive\n* 1 = negative"}, {"id": 2, "topic": "Signed and Unsigned Binary Numbers", "question": "How many values can be represented using 4-bit unsigned binary numbers?", "options": ["8", "16", "15", "More than above", "None of the above"], "answer": "b", "explanation": "Unsigned 4-bit binary can represent values from 0 to 15.\nTotal values = $2^4 = 16$"}, {"id": 3, "topic": "Signed and Unsigned Binary Numbers", "question": "What is the range of a 4-bit signed binary number in 2's complement form?", "options": ["-7 to +7", "-8 to +7", "0 to 15", "More than above", "None of the above"], "answer": "b", "explanation": "For n bits, 2's complement range is:\n\n* Negative: $-2^{n-1}$\n* Positive: $+2^{n-1} - 1$\nSo, 4-bit\n-8 to +7"}, {"id": 4, "topic": "Signed and Unsigned Binary Numbers", "question": "Which method is commonly used to represent signed binary numbers in computers?", "options": ["1's complement", "2's complement", "Sign-magnitude", "More than above", "None of the above"], "answer": "d", "explanation": "Computers may use:\n\n* Sign-magnitude\n* 1’s complement\n* 2’s complement (most common)\nSo, more than one option applies."}, {"id": 5, "topic": "Signed and Unsigned Binary Numbers", "question": "What does an unsigned binary number of 1111 represent (in decimal)?", "options": ["-1", "15", "7", "More than above", "None of the above"], "answer": "b", "explanation": "Unsigned binary: 1111 =\n$1×2^3 + 1×2^2 + 1×2^1 + 1×2^0 = 8 + 4 + 2 + 1 = 15$"}, {"id": 6, "topic": "Signed and Unsigned Binary Numbers", "question": "In a signed 8-bit system, what is the largest positive number that can be represented?", "options": ["127", "128", "255", "More than above", "None of the above"], "answer": "a", "explanation": "For 8-bit signed (2’s complement), max positive =\n$2^{7} - 1 = 127$"}, {"id": 7, "topic": "Signed and Unsigned Binary Numbers", "question": "What does the most significant bit (MSB) indicate in a signed binary number?", "options": ["Parity", "Magnitude", "Sign (positive or negative)", "More than above", "None of the above"], "answer": "c", "explanation": "In signed numbers, the MSB is the sign bit:\n\n* 0 = positive\n* 1 = negative"}, {"id": 8, "topic": "Signed and Unsigned Binary Numbers", "question": "Which binary number represents -5 in 4-bit 2’s complement?", "options": ["1101", "1011", "0101", "More than above", "None of the above"], "answer": "a", "explanation": "Step to find -5 in 2’s complement:\n\n1. +5 = 0101\n2. Invert = 1010\n3. Add 1\n\n1011 = -5"}, {"id": 9, "topic": "Signed and Unsigned Binary Numbers", "question": "What is the 2’s complement of binary 0101?", "options": ["1010", "1011", "0110", "More than above", "None of the above"], "answer": "b", "explanation": "1. Invert 0101\n1010\n\n2. Add 1\n1011\n\nSo, 2’s complement = 1011"}, {"id": 10, "topic": "Signed and Unsigned Binary Numbers", "question": "Which of the following statements is true about unsigned numbers?", "options": ["They can be positive or negative", "They use one bit to represent sign", "They store only positive values", "More than above", "None of the above  Sure! Here are **10 MCQs** based on the topic **Binary Numbers Representation – Signed and Unsigned**, as you requested — **questions with options only, no answers**:"], "answer": "c", "explanation": "Unsigned binary numbers do not include a sign bit, hence represent only non-negative values (0\nand positive).\n\nHere are the answers with explanations:"}], "Binary Numbers Representation – Signed and Unsigned": [{"id": 11, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "What digits are used in binary number representation?", "options": ["1 and 2", "0 and 2", "0 and 1", "More than above", "None of the above"], "answer": "a", "explanation": "Explanation available in the source material."}, {"id": 12, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "Which number system does a digital computer understand directly?", "options": ["Decimal", "Octal", "Hexadecimal", "More than above", "None of the above"], "answer": "a", "explanation": "Explanation available in the source material."}, {"id": 13, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "Which type of binary number can represent both positive and negative values?", "options": ["Unsigned binary", "Decimal", "Signed binary", "More than above", "None of the above"], "answer": "a", "explanation": "Explanation available in the source material."}, {"id": 14, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "What is the maximum value that can be stored in a 4-bit unsigned binary number?", "options": ["8", "15", "16", "More than above", "None of the above"], "answer": "a", "explanation": "Explanation available in the source material."}, {"id": 15, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "Which type of binary number uses all bits to represent only magnitude?", "options": ["Signed binary", "Unsigned binary", "Decimal", "More than above", "None of the above"], "answer": "a", "explanation": "Explanation available in the source material."}, {"id": 16, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "How is a negative number represented in signed binary format?", "options": ["By using a sign bit", "By adding 1 to all bits", "By flipping all bits", "More than above", "None of the above"], "answer": "a", "explanation": "Explanation available in the source material."}, {"id": 17, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "In an 8-bit signed binary number, what is the range of values it can represent?", "options": ["0 to 255", "-128 to 127", "-255 to 255", "More than above", "None of the above"], "answer": "a", "explanation": "Explanation available in the source material."}, {"id": 18, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "Which bit is used as the sign bit in a signed binary number?", "options": ["Least significant bit", "Middle bit", "Most significant bit", "More than above", "None of the above"], "answer": "a", "explanation": "Explanation available in the source material."}, {"id": 19, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "What is the main drawback of unsigned binary representation?", "options": ["It takes more memory", "Cannot represent negative values", "Difficult to convert", "More than above", "None of the above"], "answer": "a", "explanation": "Explanation available in the source material."}, {"id": 20, "topic": "Binary Numbers Representation – Signed and Unsigned", "question": "Which representation is necessary to perform subtraction using binary numbers?", "options": ["Unsigned binary", "Signed binary", "Hexadecimal", "More than above", "None of the above  Here are **MCQs 21 to 30** based on the topic **Unsigned Numbers**, following the format you requested:"], "answer": "a", "explanation": "Explanation available in the source material."}], "Unsigned Binary Numbers": [{"id": 21, "topic": "Unsigned Binary Numbers", "question": "What kind of values can unsigned binary numbers represent?", "options": ["Only negative values", "Only positive values", "Both positive and negative values", "More than above", "None of the above"], "answer": "b", "explanation": "Unsigned binary numbers do not use a sign bit, so they can represent only non-\nnegative values (i.e., 0 and positive integers)."}, {"id": 22, "topic": "Unsigned Binary Numbers", "question": "What is the default assumption for sign in decimal number representation?", "options": ["Negative", "No sign", "Positive", "More than above", "None of the above"], "answer": "c", "explanation": "If no sign is explicitly mentioned before a number in decimal, it is assumed to be\npositive by default."}, {"id": 23, "topic": "Unsigned Binary Numbers", "question": "What is the binary representation of the decimal number 0 in unsigned binary?", "options": ["1", "0", "10", "More than above", "None of the above"], "answer": "b", "explanation": "The binary representation of 0 is simply `0`. It’s the same in both signed and\nunsigned form."}, {"id": 24, "topic": "Unsigned Binary Numbers", "question": "Why is unsigned number representation called an *unambiguous representation*?", "options": ["It uses more memory", "It represents negative numbers", "Each value has a unique binary form", "More than above", "None of the above"], "answer": "c", "explanation": "Unsigned binary representation is unambiguous because every number has a\nunique representation with no sign confusion."}, {"id": 25, "topic": "Unsigned Binary Numbers", "question": "What is the formula to calculate the range of unsigned binary numbers?", "options": ["0 to (n-1)", "-2n to +2n", "0 to (2n - 1)", "More than above", "None of the above"], "answer": "c", "explanation": "In an `n`-bit unsigned system, the smallest number is 0 and the largest is `2n - 1`."}, {"id": 26, "topic": "Unsigned Binary Numbers", "question": "How many values can be represented by 3-bit unsigned binary numbers?", "options": ["4", "6", "8", "More than above", "None of the above"], "answer": "c", "explanation": "3-bit binary can represent values from 0 to 7, so total values = `23 = 8`."}, {"id": 27, "topic": "Unsigned Binary Numbers", "question": "What is the binary representation of decimal number 102?", "options": ["1010010", "1100110", "1111111", "More than above", "None of the above"], "answer": "b", "explanation": "By repeatedly dividing 102 by 2 and recording the remainders, the binary result\nis `1100110`."}, {"id": 28, "topic": "Unsigned Binary Numbers", "question": "What is the remainder when 25 is divided by 2 in binary conversion?", "options": ["2", "1", "0", "More than above", "None of the above"], "answer": "b", "explanation": "25 ÷ 2 = 12 with a remainder of 1, which is used during binary conversion."}, {"id": 29, "topic": "Unsigned Binary Numbers", "question": "Which step is involved in converting decimal to binary?", "options": ["Addition", "Subtraction", "Division by 2", "More than above", "None of the above"], "answer": "c", "explanation": "Decimal numbers are converted to binary by repeatedly dividing the number by 2\nand recording the remainders."}, {"id": 30, "topic": "Unsigned Binary Numbers", "question": "What is the range of values for a 4-bit unsigned binary number?", "options": ["0 to 4", "0 to 8", "0 to 15", "More than above", "None of the above  Here are **10 MCQs (numbered 31 to 40)** based on the topic **Signed Binary Numbers – including Sign-Magnitude, 1’s Complement, and 2’s Complement representations**."], "answer": "c", "explanation": "With 4 bits, the range is `0 to (24 - 1) = 0 to 15`.\n\nHere are the answers with explanations for the MCQs (31 to 40) based on Signed\nBinary Numbers:\n\n---\n\n###\nAnswers with Explanation"}], "Signed Binary Numbers": [{"id": 31, "topic": "Signed Binary Numbers", "question": "What distinguishes signed binary numbers from unsigned binary numbers?", "options": ["More bits are used", "Uses letters instead of digits", "Includes a sign bit", "Uses octal notation", "None of the above"], "answer": "c", "explanation": "Signed binary numbers use one bit (usually the Most Significant Bit) to indicate\nthe sign (0 for positive, 1 for negative), while unsigned numbers do not include any sign\ninformation."}, {"id": 32, "topic": "Signed Binary Numbers", "question": "In signed binary representation, what does a sign bit of 1 indicate?", "options": ["Zero", "Positive number", "Negative number", "More than above", "None of the above"], "answer": "c", "explanation": "A sign bit of `1` represents a negative number, while `0` indicates a positive\nnumber."}, {"id": 33, "topic": "Signed Binary Numbers", "question": "What is the main drawback of sign-magnitude representation?", "options": ["It is too fast", "It can’t represent zero", "It uses floating-point only", "Two representations of zero", "None of the above"], "answer": "d", "explanation": "Sign-magnitude form allows both `+0` (0000) and `-0` (1000) in 4-bit, which\nleads to ambiguous representation of zero."}, {"id": 34, "topic": "Signed Binary Numbers", "question": "What is the range of values in 4-bit sign-magnitude form?", "options": ["-8 to +8", "-7 to +7", "0 to 15", "-15 to +15", "None of the above"], "answer": "b", "explanation": "One bit is used for the sign, leaving 3 bits for magnitude. So the range becomes\n-7 to +7."}, {"id": 35, "topic": "Signed Binary Numbers", "question": "How is 1's complement of a binary number found?", "options": ["Flip every 0 to 1 and 1 to 0", "Add 1 to LSB", "Add sign bit", "Add 10 to number", "None of the above"], "answer": "a", "explanation": "The 1’s complement of a binary number is calculated by inverting every bit\n(i.e., flipping all bits)."}, {"id": 36, "topic": "Signed Binary Numbers", "question": "Which of the following is true for 2's complement representation?", "options": ["Flip all bits", "Flip all bits and add 1", "Flip sign bit only", "Keep magnitude same", "None of the above"], "answer": "b", "explanation": "To calculate 2's complement, you take the 1’s complement (flip bits) and\n\nthen add 1 to the result."}, {"id": 37, "topic": "Signed Binary Numbers", "question": "What is a key advantage of 2’s complement over sign-magnitude and 1’s complement?", "options": ["More memory usage", "Dual zero representation", "Easier arithmetic operations", "Can’t store negative numbers", "None of the above"], "answer": "c", "explanation": "2’s complement simplifies binary addition and subtraction, removing the\nneed to handle sign bits separately."}, {"id": 38, "topic": "Signed Binary Numbers", "question": "In 2’s complement, what is the 4-bit binary of -3?", "options": ["1100", "1101", "1101", "1101", "None of the above"], "answer": "b", "explanation": "* +3 = 0011\n* 1’s complement = 1100\n* Add 1\n1101\n-3 in 2’s complement (4-bit)"}, {"id": 39, "topic": "Signed Binary Numbers", "question": "In 1's complement, how many representations of 0 exist?", "options": ["One", "Two", "None", "Unlimited", "None of the above"], "answer": "b", "explanation": "1’s complement has both `0000` (+0) and `1111` (-0), so there are two\nrepresentations of zero."}, {"id": 40, "topic": "Signed Binary Numbers", "question": "Why is 2’s complement called an *unambiguous* representation?", "options": ["It only supports positive numbers", "It stores in octal", "It allows only one zero", "It doubles the values", "None of the above"], "answer": "c", "explanation": "2’s complement solves the dual-zero issue by having only one unique\nrepresentation of zero, which is `0000`.\n\n---\n\nLet me know if you’d like the next 10 MCQs (41–50) or their Hindi versions."}]};
+let currentTopic="", qs=[], idx=0, ans={}, reviewMode=false;
+
+function show(id){
+  ["home","quiz","result"].forEach(x=>document.getElementById(x).classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function renderTopics(){
+  const box=document.getElementById("topicList");
+  box.innerHTML="";
+  Object.keys(topics).forEach((t,i)=>{
+    const b=document.createElement("button");
+    b.className="topic";
+    b.textContent=`Topic ${i+1} - ${t} (${topics[t].length} Questions)`;
+    b.onclick=()=>startTopic(t);
+    box.appendChild(b);
+  });
+}
+
+function startTopic(t){
+  currentTopic=t; qs=topics[t]; idx=0; ans={}; reviewMode=false;
+  document.getElementById("topicTitle").textContent=t;
+  show("quiz"); render();
+}
+
+function render(){
+  const q=qs[idx];
+  document.getElementById("progress").textContent=`Question ${idx+1} of ${qs.length}`;
+  document.getElementById("question").textContent=q.question;
+
+  const box=document.getElementById("options");
+  box.innerHTML="";
+  q.options.forEach((o,i)=>{
+    const l="abcde"[i];
+    const b=document.createElement("button");
+    b.className="option"+(ans[q.id]===l?" selected":"");
+    b.textContent=l.toUpperCase()+") "+o;
+
+    if(reviewMode){
+      b.disabled=true;
+      if(l===q.answer)b.classList.add("correct");
+      if(ans[q.id]===l && l!==q.answer)b.classList.add("wrong");
+    } else {
+      b.onclick=()=>{ans[q.id]=l;render()};
+    }
+    box.appendChild(b);
+  });
+
+  const ex=document.getElementById("explanation");
+  if(reviewMode){
+    ex.classList.remove("hidden");
+    const ai="abcde".indexOf(q.answer);
+    ex.innerHTML="<b>Correct Answer: "+q.answer.toUpperCase()+") "+q.options[ai]+"</b><br><br><b>Explanation:</b><br>"+q.explanation.replace(/\n/g,"<br>");
+  } else ex.classList.add("hidden");
+
+  const p=document.getElementById("palette");
+  p.innerHTML="<b>Question Palette</b><br>";
+  qs.forEach((x,i)=>{
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    if(ans[x.id])b.classList.add("done");
+    b.onclick=()=>{idx=i;render()};
+    p.appendChild(b);
+  });
+}
+
+function prev(){if(idx>0){idx--;render()}}
+function next(){if(idx<qs.length-1){idx++;render()}}
+
+function finish(){
+  if(!confirm("Submit your test?"))return;
+  const correct=qs.filter(q=>ans[q.id]===q.answer).length;
+  const attempted=Object.keys(ans).length;
+  document.getElementById("score").textContent=`Score: ${correct} / ${qs.length}`;
+  document.getElementById("stats").textContent=`Attempted: ${attempted} | Correct: ${correct} | Wrong: ${attempted-correct} | Unattempted: ${qs.length-attempted}`;
+  show("result");
+}
+
+function review(){
+  reviewMode=true; idx=0;
+  document.getElementById("topicTitle").textContent=currentTopic+" - Review";
+  show("quiz"); render();
+}
+
+function restart(){
+  idx=0; ans={}; reviewMode=false;
+  document.getElementById("topicTitle").textContent=currentTopic;
+  show("quiz"); render();
+}
+
+function goHome(){
+  show("home"); renderTopics();
+}
+
+renderTopics();
+</script>
+</body>
+</html>
