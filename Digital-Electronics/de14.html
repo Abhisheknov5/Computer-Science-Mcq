@@ -1,1 +1,190 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Addition and Subtraction using 2's Complement - MCQ Quiz</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#1f2937}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:#fff;border-radius:14px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.hidden{display:none}
+button{padding:11px 16px;border:0;border-radius:8px;cursor:pointer;font-size:15px;background:#e5e7eb}
+.topic-btn,.option{width:100%;text-align:left;padding:15px;margin:10px 0;border:1px solid #d1d5db;border-radius:10px;background:#fff;font-size:16px;cursor:pointer}
+.topic-btn{font-weight:bold}
+.selected{border:2px solid #2563eb;background:#eff6ff}
+.correct{background:#dcfce7;border-color:#16a34a}
+.wrong{background:#fee2e2;border-color:#dc2626}
+.primary{background:#2563eb;color:#fff}
+.controls,.topbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+#palette button{min-width:42px;margin:4px}
+.done{background:#bbf7d0}
+.explanation{margin-top:16px;padding:14px;background:#f8fafc;border-radius:9px;line-height:1.6}
+.small{color:#6b7280}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div id="home" class="card">
+<h1>📚 Addition and Subtraction using 2's Complement</h1>
+<p class="small">Select a topic to start MCQ practice.</p>
+<div id="topicList"></div>
+</div>
+
+<div id="quiz" class="hidden">
+<div class="card topbar">
+<b id="progress"></b>
+<b id="topicTitle"></b>
+</div>
+
+<div class="card">
+<h2 id="question"></h2>
+<div id="options"></div>
+<div id="explanation" class="hidden explanation"></div>
+</div>
+
+<div class="card controls">
+<div>
+<button onclick="prev()">Previous</button>
+<button class="primary" onclick="next()">Next</button>
+</div>
+<div>
+<button onclick="goHome()">Topics</button>
+<button class="primary" onclick="submitTest()">Submit Test</button>
+</div>
+</div>
+
+<div class="card">
+<b>Question Palette</b>
+<div id="palette"></div>
+</div>
+</div>
+
+<div id="result" class="card hidden">
+<h1>🎯 Result</h1>
+<h2 id="score"></h2>
+<p id="stats"></p>
+<button class="primary" onclick="review()">Review Answers & Explanation</button>
+<button onclick="restart()">Try Again</button>
+<button onclick="goHome()">Back to Topics</button>
+</div>
+
+</div>
+
+<script>
+const topics = [{"name": "Topic 1: MCQs on Addition Using 2's Complement", "questions": [{"num": 1, "question": "What is the first step when adding a positive number with a negative number using 2's complement?", "options": ["Find 1's complement of the positive number", "Find 2's complement of the negative number", "Add both numbers directly", "Subtract the negative number", "None of the above"], "answer": "", "explanation": ""}, {"num": 2, "question": "How do you find the 2's complement of a binary number?", "options": ["Invert all bits and add 1 to the LSB", "Invert all bits only", "Add 1 to the binary number", "Subtract 1 from the binary number", "None of the above"], "answer": "", "explanation": ""}, {"num": 3, "question": "Given the binary number 1001, what is its 1's complement?", "options": ["0110", "1001", "1110", "0001", "None of the above"], "answer": "", "explanation": ""}, {"num": 4, "question": "After finding the 1's complement of 1001 as 0110, what is its 2's complement?", "options": ["0110", "0111", "1001", "1000", "None of the above"], "answer": "", "explanation": ""}, {"num": 5, "question": "When adding 1101 and 0111 (2's complement of -1001), what is the result?", "options": ["1 0100", "0100", "1101", "1111", "None of the above"], "answer": "", "explanation": ""}, {"num": 6, "question": "What should you do with the carry bit if there is an end-around carry in 2's complement addition?", "options": ["Keep the carry bit", "Add it to the LSB", "Discard the carry bit", "Subtract the carry bit", "None of the above"], "answer": "", "explanation": ""}, {"num": 7, "question": "In Case 2, when adding a positive number and a negative number where the negative number has a higher magnitude, what is the result if there is no end-around carry?", "options": ["Positive number", "Negative number", "Zero", "Overflow", "None of the above"], "answer": "", "explanation": ""}, {"num": 8, "question": "What is the 2's complement of the negative number 1110?", "options": ["0001", "0010", "1101", "1110", "None of the above"], "answer": "", "explanation": ""}, {"num": 9, "question": "What is the sum of 1101 and 0010 in 2's complement addition?", "options": ["1111", "1110", "1100", "1001", "None of the above"], "answer": "", "explanation": ""}, {"num": 10, "question": "How do you find the final answer if no carry bit is generated in 2's complement addition?", "options": ["Take the 1's complement of the result", "Take the 2's complement of the result", "Add 1 to the result", "Subtract 1 from the result", "None of the above"], "answer": "", "explanation": ""}, {"num": 11, "question": "When adding two negative numbers in 2's complement form, what happens to the carry bit?", "options": ["It is added to the LSB", "It is discarded", "It causes overflow", "It is inverted", "None of the above"], "answer": "", "explanation": ""}, {"num": 12, "question": "How do you find the 2's complement of a 5-bit number?", "options": ["Invert all bits and add 1", "Add 1 only", "Invert all bits only", "Subtract 1 only", "None of the above"], "answer": "", "explanation": ""}, {"num": 13, "question": "What is the 2's complement of 01110 in 5-bit representation?", "options": ["10001", "10010", "01101", "11100", "None of the above"], "answer": "", "explanation": ""}, {"num": 14, "question": "What is the 2's complement of 01101 in 5-bit representation?", "options": ["10010", "10011", "01101", "11101", "None of the above"], "answer": "", "explanation": ""}, {"num": 15, "question": "What is the sum of 10010 and 10011?", "options": ["1 00101", "00101", "11111", "00000", "None of the above"], "answer": "", "explanation": ""}, {"num": 16, "question": "After adding two negative numbers and getting an end-around carry, what is the next step?", "options": ["Add carry to the LSB", "Discard the carry and take 2's complement of the result", "Add carry to MSB", "Invert the result", "None of the above"], "answer": "", "explanation": ""}, {"num": 17, "question": "What is the 2's complement of 00101?", "options": ["11011", "00101", "11110", "00010", "None of the above"], "answer": "", "explanation": ""}, {"num": 18, "question": "How is the final result of adding two negative numbers represented in 2's complement addition?", "options": ["Positive number", "Negative number", "Zero", "Overflow", "None of the above"], "answer": "", "explanation": ""}, {"num": 19, "question": "What does an end-around carry in 2's complement addition indicate about the result?", "options": ["Positive number", "Negative number", "Zero", "Overflow", "None of the above"], "answer": "", "explanation": ""}, {"num": 20, "question": "Which of the following is NOT true about 2's complement addition?", "options": ["Negative numbers are represented using 2's complement", "End-around carry is discarded in case of positive result", "Carry is added to LSB always", "The 2's complement of a number is obtained by inverting bits and adding 1", "None of the above Topic-2 MCQs on Subtraction Using 2's Complement ### MCQs (21 to 40)"], "answer": "", "explanation": ""}]}, {"name": "Topic 2: MCQs on Subtraction Using 2's Complement", "questions": [{"num": 21, "question": "What is the first step in subtracting two binary numbers using 2's complement?", "options": ["Add the minuend and subtrahend", "Find the 1's complement of the minuend", "Find the 2's complement of the subtrahend", "Find the 2's complement of the minuend", ""], "answer": "c", "explanation": "To subtract using 2's complement, first find the 2's complement of the subtrahend (the number being subtracted)."}, {"num": 22, "question": "After finding the 2's complement of the subtrahend, what do you do next?", "options": ["Subtract it from the minuend", "Add it to the minuend", "Add it to the subtrahend", "Invert the minuend", ""], "answer": "b", "explanation": "After finding the 2's complement of the subtrahend, add it to the minuend (the number from which you subtract)."}, {"num": 23, "question": "What happens if you get a carry after adding the minuend and the 2's complement of the subtrahend?", "options": ["Carry is added to the result", "Carry is discarded and the result is positive", "Carry is subtracted from the result", "Carry means the result is negative", ""], "answer": "b", "explanation": "If the addition produces a carry, it is discarded and the result is positive."}, {"num": 24, "question": "What should be done if there is **no carry** after addition?", "options": ["Take the 1's complement of the result", "Take the 2's complement of the result (negative number)", "Discard the result", "Add 1 to the result", ""], "answer": "b", "explanation": "If there is no carry, take the 2's complement of the sum to get the negative result."}, {"num": 25, "question": "In Example 1, what is the 2's complement of the subtrahend 00111?", "options": ["11000", "11001", "10111", "01001", ""], "answer": "b", "explanation": "The 2's complement of 00111 is found by taking the 1's complement (11000) and adding 1, resulting in 11001."}, {"num": 26, "question": "What is the result of 10101 + 11001 in Example 1?", "options": ["1 01110", "10110", "11100", "00110", ""], "answer": "a", "explanation": "Adding 10101 and 11001 results in 1 01110 (binary sum with carry 1)."}, {"num": 27, "question": "In Example 1, why is the carry bit discarded?", "options": ["Because the result is negative", "Because the result is positive", "Because carry is always ignored", "Because carry is added to LSB", ""], "answer": "b", "explanation": "The presence of carry indicates a positive result, so the carry bit is discarded."}, {"num": 28, "question": "In Example 2, what is the 2's complement of the subtrahend 10111?", "options": ["10110", "01001", "01000", "10110", ""], "answer": "b", "explanation": "The 2's complement of 10111 is found by taking 1's complement (01000) and adding 1, which gives 01001."}, {"num": 29, "question": "What is the sum of 10101 and 01001 in Example 2?", "options": ["11111", "11110", "10110", "10010", ""], "answer": "b", "explanation": "Adding 10101 and 01001 results in 11110 without a carry."}, {"num": 30, "question": "Why do we take the 2's complement of the result in Example 2?", "options": ["Because the result is positive", "Because there is no carry, so the result is negative", "Because the subtrahend is greater", "Because carry bit is 1", ""], "answer": "b", "explanation": "No carry means the result is negative, so we take the 2's complement of the sum to get the final answer."}, {"num": 31, "question": "What is the 2's complement of 11110 in Example 2?", "options": ["00010", "11101", "00101", "01010", ""], "answer": "a", "explanation": "The 2's complement of 11110 is found by taking 1's complement (00001) and adding 1, resulting in 00010."}, {"num": 32, "question": "When subtracting using 2's complement, what does the presence of a carry after addition indicate?", "options": ["The minuend is smaller", "The result is negative", "The result is positive", "The subtrahend is zero", ""], "answer": "c", "explanation": "A carry after addition indicates the result is positive."}, {"num": 33, "question": "What is the binary result if 2's complement subtraction results in no carry and the result after 2's complement is 00010?", "options": ["+2", "-2", "+10", "-10", ""], "answer": "b", "explanation": "The binary 00010 is decimal 2, but since it came after taking 2's complement due to no carry, the result is negative -2."}, {"num": 34, "question": "Which of the following statements is true about subtraction using 2's complement?", "options": ["The subtrahend's 1's complement is added to the minuend", "The subtrahend's 2's complement is added to the minuend", "The minuend's 2's complement is subtracted from the subtrahend", "The minuend's 1's complement is added to the subtrahend", ""], "answer": "b", "explanation": "Subtraction in 2's complement method is done by adding the 2's complement of the subtrahend to the minuend."}, {"num": 35, "question": "If the subtrahend is greater than the minuend, what will be the nature of the result?", "options": ["Positive", "Negative", "Zero", "Undefined", ""], "answer": "b", "explanation": "If the subtrahend is greater than the minuend, the result is negative."}, {"num": 36, "question": "What is the main advantage of using 2's complement in binary subtraction?", "options": ["Simplifies subtraction as addition", "Requires fewer bits", "Uses less memory", "Avoids carry bits", ""], "answer": "a", "explanation": "2's complement allows subtraction to be performed as addition, simplifying binary arithmetic."}, {"num": 37, "question": "If the minuend is 10010 and the subtrahend is 01101, what is the first step?", "options": ["Find 1's complement of minuend", "Find 2's complement of subtrahend", "Add both numbers directly", "Find 2's complement of minuend", ""], "answer": "b", "explanation": "The first step is to find the 2's complement of the subtrahend before addition."}, {"num": 38, "question": "If the addition of the minuend and 2's complement of the subtrahend produces 0 carry, what is the final step?", "options": ["Discard the result", "Take 1's complement of the sum", "Take 2's complement of the sum", "Add carry to the sum", ""], "answer": "c", "explanation": "No carry means the sum is negative, so take 2's complement to get the final answer."}, {"num": 39, "question": "In 5-bit binary subtraction using 2's complement, what happens if the carry bit is 1 after addition?", "options": ["Add carry to the MSB", "Discard the carry bit", "Take 2's complement of the result", "Add carry to the LSB", ""], "answer": "b", "explanation": "If carry bit is 1 after addition, discard it and the remaining bits represent the positive result."}, {"num": 40, "question": "What is the final answer of 10101 - 00111 using 2's complement?", "options": ["01110 (positive)", "10010 (negative)", "00010 (negative)", "11110 (negative) --- If you want, I can provide answers with explanations for these as well! Would you like that? --- ### Answers with Explanation 1. **Answer:** b) Find 2's complement of the negative number **Explanation:** When adding a positive and a negative number using 2's complement, first find the 2's complement of the negative number before adding. 2. **Answer:** a) Invert all bits and add 1 to the LSB **Explanation:** 2's complement is found by taking the 1's complement (invert bits) and adding 1 to the least significant bit. 3. **Answer:** a) 0110 **Explanation:** The 1's complement of 1001 is obtained by inverting bits: 1 0, 0 1, so 1001", ""], "answer": "a", "explanation": "From example 1, the result of 10101 - 00111 is 01110 (positive) after discarding the carry."}]}];
+let qs = [], index = 0, answers = {}, reviewMode = false;
+
+function show(id){
+  ['home','quiz','result'].forEach(x => document.getElementById(x).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function renderTopics(){
+  const box = document.getElementById('topicList');
+  box.innerHTML = '';
+  topics.forEach((topic,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'topic-btn';
+    btn.textContent = `${topic.name} (${topic.questions.length} Questions)`;
+    btn.onclick = () => start(i);
+    box.appendChild(btn);
+  });
+}
+
+function start(i){
+  qs = topics[i].questions;
+  index = 0;
+  answers = {};
+  reviewMode = false;
+  document.getElementById('topicTitle').textContent = topics[i].name;
+  show('quiz');
+  render();
+}
+
+function render(){
+  const q = qs[index];
+  document.getElementById('progress').textContent = `Question ${index+1} of ${qs.length}`;
+  document.getElementById('question').textContent = q.question;
+
+  const box = document.getElementById('options');
+  box.innerHTML = '';
+
+  q.options.forEach((opt,i) => {
+    if(!opt) return;
+    const letter = 'abcde'[i];
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = letter.toUpperCase() + ') ' + opt;
+
+    if(answers[index] === letter) btn.classList.add('selected');
+
+    if(reviewMode){
+      btn.disabled = true;
+      if(letter === q.answer) btn.classList.add('correct');
+      if(answers[index] === letter && letter !== q.answer) btn.classList.add('wrong');
+    } else {
+      btn.onclick = () => {
+        answers[index] = letter;
+        render();
+      };
+    }
+    box.appendChild(btn);
+  });
+
+  const exp = document.getElementById('explanation');
+  if(reviewMode){
+    exp.classList.remove('hidden');
+    const ai = 'abcde'.indexOf(q.answer);
+    const answerText = ai >= 0 ? q.answer.toUpperCase() + ') ' + q.options[ai] : 'Not available';
+    exp.innerHTML = '<b>Correct Answer: ' + answerText + '</b><br><br><b>Explanation:</b><br>' + (q.explanation || 'Explanation not available in source.');
+  } else {
+    exp.classList.add('hidden');
+  }
+
+  const palette = document.getElementById('palette');
+  palette.innerHTML = '';
+  qs.forEach((_,i) => {
+    const btn = document.createElement('button');
+    btn.textContent = i + 1;
+    if(answers[i]) btn.classList.add('done');
+    btn.onclick = () => { index = i; render(); };
+    palette.appendChild(btn);
+  });
+}
+
+function prev(){ if(index > 0){ index--; render(); } }
+function next(){ if(index < qs.length-1){ index++; render(); } }
+
+function submitTest(){
+  const correct = qs.filter((q,i) => answers[i] === q.answer).length;
+  const attempted = Object.keys(answers).length;
+  document.getElementById('score').textContent = `Score: ${correct} / ${qs.length}`;
+  document.getElementById('stats').textContent =
+    `Attempted: ${attempted} | Correct: ${correct} | Wrong: ${attempted-correct} | Unattempted: ${qs.length-attempted}`;
+  show('result');
+}
+
+function review(){
+  reviewMode = true;
+  index = 0;
+  show('quiz');
+  render();
+}
+
+function restart(){
+  answers = {};
+  index = 0;
+  reviewMode = false;
+  show('quiz');
+  render();
+}
+
+function goHome(){ show('home'); }
+renderTopics();
+</script>
+</body>
+</html>
