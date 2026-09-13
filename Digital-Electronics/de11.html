@@ -1,1 +1,181 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9's & 10's Complement MCQ Practice</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f6fb;color:#1f2937}
+.container{max-width:950px;margin:auto;padding:20px}
+.header{text-align:center;margin-bottom:20px}
+.card{background:#fff;border-radius:16px;padding:20px;margin:15px 0;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.hidden{display:none!important}
+.topic{width:100%;padding:18px;margin:10px 0;border:0;border-radius:12px;background:#fff;text-align:left;font-size:18px;font-weight:bold;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.08)}
+.topic:hover{transform:translateY(-2px)}
+.bar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+button{border:0;border-radius:10px;padding:12px 18px;font-size:15px;cursor:pointer;margin:4px}
+.primary{background:#2563eb;color:#fff}
+.secondary{background:#e5e7eb;color:#111827}
+.option{display:block;width:100%;text-align:left;background:#f8fafc;border:2px solid #e5e7eb;margin:10px 0;padding:14px;border-radius:10px}
+.option.selected{border-color:#2563eb;background:#eff6ff}
+.option.correct{border-color:#16a34a;background:#dcfce7}
+.option.wrong{border-color:#dc2626;background:#fee2e2}
+.option:disabled{cursor:default;opacity:1}
+.explanation{background:#f0fdf4;border-left:5px solid #16a34a;padding:15px;border-radius:8px;margin-top:15px;line-height:1.5}
+.palette button{width:42px;height:42px;padding:0;background:#e5e7eb}
+.palette button.done{background:#2563eb;color:#fff}
+#result{text-align:center}
+@media(max-width:600px){.container{padding:12px}.card{padding:15px}h1{font-size:24px}h2{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div id="home">
+<div class="header">
+<h1>📚 9's & 10's Complement MCQ Practice</h1>
+<p>Select a topic to start practice</p>
+</div>
+<div class="card">
+<button class="topic" onclick="startTopic(&quot;Topic-1: 9's Complement and Subtraction Using 9's Complement&quot;)">📘 Topic-1: 9's Complement and Subtraction Using 9's Complement (30 Questions)</button>
+<button class="topic" onclick="startTopic(&quot;Topic-2: 10's Complement and Subtraction Using 10's Complement&quot;)">📗 Topic-2: 10's Complement and Subtraction Using 10's Complement (30 Questions)</button>
+</div>
+</div>
+
+<div id="quiz" class="hidden">
+<div class="card bar"><b id="progress"></b><b id="topicTitle"></b></div>
+<div class="card">
+<h2 id="question"></h2>
+<div id="options"></div>
+<div id="explanation" class="hidden explanation"></div>
+</div>
+<div class="card bar">
+<div>
+<button class="secondary" onclick="prevQ()">Previous</button>
+<button class="primary" onclick="nextQ()">Next</button>
+</div>
+<div>
+<button class="secondary" onclick="goHome()">Topics</button>
+<button class="primary" onclick="finish()">Submit Test</button>
+</div>
+</div>
+<div id="palette" class="card palette"></div>
+</div>
+
+<div id="result" class="card hidden">
+<h1>🎯 Result</h1>
+<h2 id="score"></h2>
+<p id="stats"></p>
+<button class="primary" onclick="review()">Review Answers & Explanations</button>
+<button class="secondary" onclick="restart()">Try Again</button>
+<button onclick="goHome()">Back to Topics</button>
+</div>
+</div>
+
+<script>
+const topics = {"Topic-1: 9's Complement and Subtraction Using 9's Complement": [{"id": 1, "question": "What is the 9's complement of a decimal number?", "options": ["Adding 9 to each digit of the number", "Subtracting each digit of the number from 9", "Subtracting the number from 9999", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Subtracting each digit of the number from 9 Explanation: 9’s complement of a decimal number is found by subtracting each digit from 9. For example, 9’s complement of 1234 is 8765."}, {"id": 2, "question": "How do you find the 9's complement of the number 1423?", "options": ["9999 - 1423 = 8576", "9999 + 1423 = 11422", "9999 - 1423 = 8577", "More than one of the above", "None of the above"], "answer": "a", "explanation": "9999 - 1423 = 8576 Explanation: Subtract each digit from 9 or subtract the whole number from 9999: 9999 - 1423 = 8576."}, {"id": 3, "question": "What is the main use of the 9's complement in arithmetic?", "options": ["To perform addition", "To perform multiplication", "To perform subtraction", "More than one of the above", "None of the above"], "answer": "c", "explanation": "To perform subtraction Explanation: 9’s complement is primarily used to convert subtraction into addition, simplifying the operation."}, {"id": 4, "question": "In subtraction using 9's complement, what is the first step?", "options": ["Find the 9's complement of the minuend", "Find the 9's complement of the subtrahend", "Add the minuend and subtrahend directly", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Find the 9's complement of the subtrahend Explanation: The first step is to find the 9’s complement of the number to be subtracted (subtrahend), then add it to the minuend."}, {"id": 5, "question": "What happens after adding the 9's complement of the subtrahend to the minuend?", "options": ["You subtract the carry", "You add the carry to the result", "You ignore the carry", "More than one of the above", "None of the above"], "answer": "d", "explanation": "More than one of the above Explanation: If there is a carry, it’s added to the result (end-around carry). If no carry, we find the 9’s complement of the result."}, {"id": 6, "question": "In Case 1 of subtraction using 9's complement, when the subtrahend is smaller than the minuend, what happens?", "options": ["Result has no carry", "Result has carry", "Result is always negative", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Result has carry Explanation: When subtrahend is less than minuend, we get a carry, indicating the result is positive."}, {"id": 7, "question": "What do you do with the carry in Case 1 after adding the 9's complement of the subtrahend to the minuend?", "options": ["Subtract carry from result", "Add carry to the result", "Ignore the carry", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Add carry to the result Explanation: In Case 1, we perform end-around carry by adding 1 to the result."}, {"id": 8, "question": "In Case 2, when the subtrahend is greater than the minuend, what does the absence of a carry indicate?", "options": ["The result is positive", "The result is zero", "The result is negative", "More than one of the above", "None of the above"], "answer": "c", "explanation": "The result is negative Explanation: Lack of carry means the result is negative. To get the magnitude, take the 9’s complement of the result."}, {"id": 9, "question": "What should be done to find the final result in Case 2?", "options": ["Find the 9's complement of the result obtained", "Add 1 to the result obtained", "Subtract 9's complement of minuend", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Find the 9's complement of the result obtained Explanation: When no carry is generated, take the 9’s complement of the result and mark it as negative."}, {"id": 10, "question": "Which of the following statements about 9's complement subtraction is true?", "options": ["It simplifies subtraction operations", "It avoids the direct subtraction of numbers", "It always generates a carry", "More than one of the above", "None of the above"], "answer": "d", "explanation": "More than one of the above Explanation: It simplifies subtraction and avoids direct subtraction by turning it into addition."}, {"id": 11, "question": "The 9's complement of the number 5678 is:", "options": ["4321", "4320", "4322", "More than one of the above", "None of the above"], "answer": "a", "explanation": "4321 Explanation: Subtract each digit from 9: 9-5=4, 9-6=3, 9-7=2, 9-8=1 4321"}, {"id": 12, "question": "To find the 9's complement of a number with n digits, subtract the number from:", "options": ["10^n - 1", "10^n", "9^n", "More than one of the above", "None of the above"], "answer": "a", "explanation": "10n - 1 Explanation: For a 4-digit number, it’s 9999 (which is 104 - 1)"}, {"id": 13, "question": "Why is 9's complement useful in subtraction?", "options": ["It converts subtraction into addition", "It speeds up multiplication", "It helps in division", "More than one of the above", "None of the above"], "answer": "a", "explanation": "It converts subtraction into addition Explanation: That's the whole purpose of using complements: avoid direct subtraction."}, {"id": 14, "question": "If the minuend is 5423 and the subtrahend is 1234, which case applies?", "options": ["Case 1 - subtrahend < minuend", "Case 2 - subtrahend > minuend", "Case 1 - subtrahend = minuend", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Case 1 - subtrahend < minuend Explanation: Since 1234 < 5423, it’s Case 1."}, {"id": 15, "question": "What is the 9's complement of 0000?", "options": ["9999", "0000", "1111", "More than one of the above", "None of the above"], "answer": "a", "explanation": "9999 Explanation: 9 - 0 = 9 for each digit 9999"}, {"id": 16, "question": "Subtracting 1234 from 5678 using 9's complement involves:", "options": ["Adding 9's complement of 1234 to 5678", "Adding 5678 to 1234", "Subtracting 9's complement of 5678 from 1234", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Adding 9's complement of 1234 to 5678 Explanation: Always add the 9’s complement of the subtrahend to the minuend."}, {"id": 17, "question": "If the subtrahend is greater than the minuend, after adding 9's complement and minuend, what must you do?", "options": ["Add carry to the result", "Find 9's complement of the result", "Ignore the result", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Find 9's complement of the result Explanation: No carry means negative result take 9’s complement of the sum to get final magnitude."}, {"id": 18, "question": "The result obtained after subtraction using 9's complement when there is carry is:", "options": ["Positive", "Negative", "Zero", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Positive Explanation: Carry implies the subtraction result is positive."}, {"id": 19, "question": "The subtraction 9999 - 1423 gives:", "options": ["8576", "8675", "8577", "More than one of the above", "None of the above"], "answer": "a", "explanation": "8576 Explanation: 9999 - 1423 = 8576"}, {"id": 20, "question": "Which of the following best describes the 9's complement method?", "options": ["It is only used for binary numbers", "It is a decimal subtraction technique", "It is a multiplication technique", "More than one of the above", "None of the above"], "answer": "b", "explanation": "It is a decimal subtraction technique Explanation: It’s specific to decimal system subtraction."}, {"id": 21, "question": "The 9's complement of the digit 9 is:", "options": ["0", "1", "9", "More than one of the above", "None of the above"], "answer": "a", "explanation": "0 Explanation: 9 - 9 = 0"}, {"id": 22, "question": "When subtracting numbers with 9's complement, if the result has no carry, the final answer is:", "options": ["The 9's complement of the result", "The result itself", "The carry value", "More than one of the above", "None of the above"], "answer": "a", "explanation": "The 9's complement of the result Explanation: No carry result is negative take 9's complement of the result to get magnitude."}, {"id": 23, "question": "What happens if you add the 9's complement of the subtrahend to the minuend and the result has a carry?", "options": ["Ignore the carry", "Add the carry to the result", "Subtract the carry from the result", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Ignore the carry Explanation: The carry is ignored after adding 1 to the result (end-around carry is already considered)."}, {"id": 24, "question": "If the number is 2345, its 9's complement is:", "options": ["7654", "7655", "7653", "More than one of the above", "None of the above"], "answer": "a", "explanation": "7654 Explanation: 9-2=7, 9-3=6, 9-4=5, 9-5=4 7654"}, {"id": 25, "question": "To subtract 4321 from 5678 using 9's complement, you need to:", "options": ["Find 9's complement of 4321 and add to 5678", "Find 9's complement of 5678 and add to 4321", "Directly subtract 4321 from 5678", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Find 9's complement of 4321 and add to 5678 Explanation: Always take 9’s complement of the subtrahend (4321) and add it to minuend (5678)."}, {"id": 26, "question": "The 9's complement of 9999 is:", "options": ["0000", "9999", "1111", "More than one of the above", "None of the above"], "answer": "a", "explanation": "0000 Explanation: 9-9 for each digit = 0 0000"}, {"id": 27, "question": "In 9's complement subtraction, the carry obtained after addition is called:", "options": ["Borrow", "Overflow", "End-around carry", "More than one of the above", "None of the above"], "answer": "c", "explanation": "End-around carry Explanation: When carry occurs, we add it to the result this is called end-around carry."}, {"id": 28, "question": "If the subtrahend equals the minuend, the result after subtraction using 9's complement will be:", "options": ["0000", "9999", "1111", "More than one of the above", "None of the above"], "answer": "a", "explanation": "0000 Explanation: Equal numbers subtract to 0. So, 9’s complement addition gives result = 9999 + 1 = 10000 ignore carry result = 0000"}, {"id": 29, "question": "In the 9's complement method, what is the maximum number of digits considered?", "options": ["Depends on the number of digits in the minuend and subtrahend", "Always 4 digits", "Always 3 digits", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Depends on the number of digits in the minuend and subtrahend Explanation: The digit length depends on the input numbers, typically padded to same number of digits."}, {"id": 30, "question": "The 9's complement method is an example of which arithmetic technique?", "options": ["Direct subtraction", "Complement subtraction", "Multiplication", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Complement subtraction Explanation: This is a form of subtraction using complements."}], "Topic-2: 10's Complement and Subtraction Using 10's Complement": [{"id": 31, "question": "What is the formula to find the 10's complement of a number?", "options": ["Subtract from 10000", "Subtract from 9999 and add 1", "Subtract each digit from 9 and subtract 1", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Subtract from 9999 and add 1 The 10's complement of a number is: (9999 - number) + 1."}, {"id": 32, "question": "The 10's complement of 1423 is:", "options": ["8576", "8577", "8575", "More than one of the above", "None of the above"], "answer": "b", "explanation": "8577 9999 - 1423 = 8576; then add 1 8577."}, {"id": 33, "question": "How is the 10's complement of a number related to its 9's complement?", "options": ["Add 1 to the 9's complement", "Subtract 1 from the 9's complement", "Multiply the 9's complement by 10", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Add 1 to the 9's complement 10's complement = 9's complement + 1."}, {"id": 34, "question": "What is the purpose of using 10's complement in arithmetic?", "options": ["To perform multiplication", "To perform subtraction", "To perform division", "More than one of the above", "None of the above"], "answer": "b", "explanation": "To perform subtraction It simplifies subtraction using addition logic."}, {"id": 35, "question": "What is the first step in subtraction using 10's complement?", "options": ["Find the 9's complement of the minuend", "Find the 10's complement of the minuend", "Find the 10's complement of the subtrahend", "More than one of the above", "None of the above"], "answer": "c", "explanation": "Find the 10's complement of the subtrahend You take the complement of the number to be subtracted."}, {"id": 36, "question": "In subtraction using 10's complement, what do you do after finding the 10's complement of the subtrahend?", "options": ["Subtract it from the minuend", "Add it to the minuend", "Multiply it by 10", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Add it to the minuend Add the complement to the original number."}, {"id": 37, "question": "When the subtrahend is smaller than the minuend and subtraction is done using 10's complement, what is the result?", "options": ["Negative without carry", "Positive with carry", "Always zero", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Positive with carry Carry indicates positive result, just ignore it."}, {"id": 38, "question": "What do you do with the carry in Case 1 (subtrahend < minuend) using 10's complement?", "options": ["Add it to the result", "Ignore it", "Subtract it", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Ignore it Discard the extra carry; the remaining value is the correct answer."}, {"id": 39, "question": "In Case 2 (subtrahend > minuend), what does absence of carry mean?", "options": ["The result is zero", "The result is positive", "The result is negative", "More than one of the above", "None of the above"], "answer": "c", "explanation": "The result is negative No carry means the result is negative in sign."}, {"id": 40, "question": "What is the final step in Case 2 of subtraction using 10's complement?", "options": ["Add 1 to the result", "Find 9's complement of the result", "Find 10's complement of the result", "More than one of the above", "None of the above"], "answer": "c", "explanation": "Find 10's complement of the result After getting a result without carry, take its 10's complement for final answer."}, {"id": 41, "question": "The 10's complement of 9999 is:", "options": ["0000", "9999", "0001", "More than one of the above", "None of the above"], "answer": "c", "explanation": "0001 9999 0000 (9’s complement), +1 0001."}, {"id": 42, "question": "Subtracting 1234 from 5678 using 10's complement involves:", "options": ["Finding 10's complement of 1234 and adding to 5678", "Finding 10's complement of 5678 and adding to 1234", "Direct subtraction", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Finding 10's complement of 1234 and adding to 5678 Subtrahend is 1234 Find 10’s complement and add to 5678."}, {"id": 43, "question": "What is the 10's complement of 0000?", "options": ["9999", "0000", "0001", "More than one of the above", "None of the above"], "answer": "c", "explanation": "0001 9999 - 0000 = 9999 +1 = 10000 only 4 digits kept: 0000 (carry ignored). Correction: b) 0000 9999 - 0000 = 9999 + 1 = 10000 only lower 4 digits are 0000. So correct answer is 0000."}, {"id": 44, "question": "In 10's complement subtraction, what happens if there is no carry after addition?", "options": ["The result is negative", "The result is positive", "The result is zero", "More than one of the above", "None of the above"], "answer": "a", "explanation": "The result is negative Absence of carry means the result is negative and needs correction."}, {"id": 45, "question": "The 10's complement of 2345 is:", "options": ["7654", "7655", "7656", "More than one of the above", "None of the above"], "answer": "b", "explanation": "7655 9999 - 2345 = 7654 + 1 = 7655."}, {"id": 46, "question": "Which case applies if subtrahend = minuend using 10's complement?", "options": ["Case 1 – Subtrahend < Minuend", "Case 2 – Subtrahend > Minuend", "Special case – Result = 0000", "More than one of the above", "None of the above"], "answer": "c", "explanation": "Special case – Result = 0000 Equal numbers result in 0000 after carry is ignored."}, {"id": 47, "question": "When the result is negative using 10's complement subtraction, how is the final result obtained?", "options": ["Take 10’s complement of the result", "Take 9’s complement of the result", "Reverse the digits", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Take 10’s complement of the result Final step in negative result case is taking the 10’s complement again."}, {"id": 48, "question": "In subtraction using 10’s complement, which of the following gives a correct indication of sign?", "options": ["Carry present Positive", "Carry absent Negative", "Carry absent Positive", "More than one of the above", "None of the above"], "answer": "d", "explanation": "More than one of the above (a and b) Carry present positive; Carry absent negative."}, {"id": 49, "question": "What is the difference between 9's complement and 10's complement subtraction?", "options": ["10’s complement adds an extra 1", "9’s complement uses direct difference", "10’s complement never needs complements", "More than one of the above", "None of the above"], "answer": "a", "explanation": "10’s complement adds an extra 1 That is the only difference: 10’s complement = 9’s complement + 1."}, {"id": 50, "question": "What is the 10’s complement of 6789?", "options": ["3210", "3211", "3212", "More than one of the above", "None of the above"], "answer": "b", "explanation": "3211 9999 - 6789 = 3210 + 1 = 3211."}, {"id": 51, "question": "What is 10’s complement of 1000?", "options": ["9000", "8999", "9001", "More than one of the above", "None of the above"], "answer": "c", "explanation": "9000 9999 - 1000 = 8999 + 1 = 9000."}, {"id": 52, "question": "Which of the following is a valid step in 10’s complement subtraction?", "options": ["Ignore carry in Case 1", "Subtract 10’s complement in Case 2", "Always subtract carry", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Ignore carry in Case 1 That’s the standard method in Case 1 (positive result)."}, {"id": 53, "question": "If 10’s complement of 3456 is added to 1234 and result has no carry, final result is:", "options": ["Positive", "Negative", "Zero", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Negative No carry = Negative result."}, {"id": 54, "question": "10’s complement of 8000 is:", "options": ["1999", "1998", "2000", "More than one of the above", "None of the above"], "answer": "c", "explanation": "2000 9999 - 8000 = 1999 + 1 = 2000."}, {"id": 55, "question": "In 10’s complement subtraction, which number is complemented?", "options": ["Minuend", "Subtrahend", "Result", "More than one of the above", "None of the above"], "answer": "b", "explanation": "Subtrahend Only the number to be subtracted is complemented."}, {"id": 56, "question": "In Case 1, what does ignoring the carry result in?", "options": ["Correct positive result", "Incorrect negative result", "Zero", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Correct positive result That’s the intended logic of Case 1."}, {"id": 57, "question": "Why is 10's complement preferred over 9’s complement in computers?", "options": ["Easier for binary systems", "Avoids two-step correction", "Simpler hardware implementation", "More than one of the above", "None of the above"], "answer": "d", "explanation": "More than one of the above It’s easier for binary and better for hardware."}, {"id": 58, "question": "The 10’s complement of a 4-digit number 0001 is:", "options": ["9998", "9999", "9990", "More than one of the above", "None of the above"], "answer": "a", "explanation": "9998 9999 - 0001 = 9998 + 1 = 9999."}, {"id": 59, "question": "How do you subtract a larger number from a smaller one using 10’s complement?", "options": ["Find 10’s complement of smaller number", "Subtract directly", "Find 10’s complement of larger number and add to smaller", "More than one of the above", "None of the above"], "answer": "c", "explanation": "Find 10’s complement of larger number and add to smaller Standard method for Case 2 (minuend < subtrahend)."}, {"id": 60, "question": "10’s complement is also known as:", "options": ["Radix complement", "Diminished radix complement", "Signed magnitude", "More than one of the above", "None of the above"], "answer": "a", "explanation": "Radix complement In decimal (base 10), 10’s complement is radix complement; 9’s is diminished radix complement."}]};
+let qs=[],idx=0,answers={},reviewMode=false;
+
+function showPage(id){
+  ['home','quiz','result'].forEach(x=>document.getElementById(x).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function startTopic(name){
+  qs=topics[name];
+  idx=0;
+  answers={};
+  reviewMode=false;
+  document.getElementById('topicTitle').textContent=name;
+  showPage('quiz');
+  render();
+}
+
+function render(){
+  const q=qs[idx];
+  document.getElementById('progress').textContent='Question '+(idx+1)+' of '+qs.length;
+  document.getElementById('question').textContent=q.question;
+
+  const box=document.getElementById('options');
+  box.innerHTML='';
+
+  q.options.forEach((opt,i)=>{
+    if(!opt)return;
+    const letter='abcde'[i];
+    const btn=document.createElement('button');
+    btn.className='option';
+    btn.textContent=letter.toUpperCase()+') '+opt;
+
+    if(answers[q.id]===letter)btn.classList.add('selected');
+
+    if(reviewMode){
+      btn.disabled=true;
+      if(letter===q.answer)btn.classList.add('correct');
+      if(answers[q.id]===letter && letter!==q.answer)btn.classList.add('wrong');
+    } else {
+      btn.onclick=()=>{answers[q.id]=letter;render()};
+    }
+
+    box.appendChild(btn);
+  });
+
+  const ex=document.getElementById('explanation');
+  if(reviewMode){
+    ex.classList.remove('hidden');
+    const ai='abcde'.indexOf(q.answer);
+    ex.innerHTML='<b>Correct Answer: '+q.answer.toUpperCase()+') '+q.options[ai]+'</b><br><br><b>Explanation:</b> '+q.explanation;
+  } else {
+    ex.classList.add('hidden');
+  }
+
+  const pal=document.getElementById('palette');
+  pal.innerHTML='<b>Question Palette</b><br>';
+
+  qs.forEach((item,i)=>{
+    const b=document.createElement('button');
+    b.textContent=i+1;
+    if(answers[item.id])b.classList.add('done');
+    b.onclick=()=>{idx=i;render()};
+    pal.appendChild(b);
+  });
+}
+
+function prevQ(){if(idx>0){idx--;render()}}
+function nextQ(){if(idx<qs.length-1){idx++;render()}}
+
+function finish(){
+  const attempted=Object.keys(answers).length;
+  const correct=qs.filter(q=>answers[q.id]===q.answer).length;
+
+  document.getElementById('score').textContent='Score: '+correct+' / '+qs.length;
+  document.getElementById('stats').textContent=
+    'Attempted: '+attempted+
+    ' | Correct: '+correct+
+    ' | Wrong: '+(attempted-correct)+
+    ' | Unattempted: '+(qs.length-attempted);
+
+  showPage('result');
+}
+
+function review(){
+  reviewMode=true;
+  idx=0;
+  showPage('quiz');
+  render();
+}
+
+function restart(){
+  answers={};
+  idx=0;
+  reviewMode=false;
+  showPage('quiz');
+  render();
+}
+
+function goHome(){
+  showPage('home');
+}
+</script>
+</body>
+</html>
